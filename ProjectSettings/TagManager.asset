@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Objects
+    uniqueID: 2135629247
+    locked: 0
   - name: Player
     uniqueID: 1588271091
     locked: 0
@@ -50,4 +53,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 3768940675
+    locked: 0
+  - name: Transition
+    uniqueID: 1039106555
     locked: 0

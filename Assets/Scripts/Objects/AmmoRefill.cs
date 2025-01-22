@@ -1,0 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AmmoRefill : MonoBehaviour, ICollidable
+{
+	public void OnCollide(Player player)
+	{
+		player.RefillAmmo();
+
+		ParticleManager.DestroyAfterDuration(ParticleManager.CreateParticleSystem("Ammo", transform.position, transform.parent));
+
+		Destroy(gameObject);
+	}
+}
