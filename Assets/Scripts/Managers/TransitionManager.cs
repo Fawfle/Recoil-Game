@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using TMPro;
-using UnityEditor;
 
 [RequireComponent(typeof(Animator))]
 public class TransitionManager : MonoBehaviour
@@ -32,11 +31,6 @@ public class TransitionManager : MonoBehaviour
 	{
 		if (transitioning) return;
 		StartCoroutine(LoadSceneRoutine(scene));
-	}
-
-	public void LoadScene(SceneAsset asset)
-	{
-		LoadScene(asset.name);
 	}
 
 	public void ReloadScene()

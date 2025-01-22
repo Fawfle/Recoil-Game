@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,15 +10,14 @@ public class MainMenuManager : MonoBehaviour
 
     [SerializeField] private float backgroundScrollSpeed = 0.05f;
 
-    [SerializeField] private SceneAsset endlessScene = null;
 
-    [SerializeField] private List<SceneAsset> levelScenes = new();
+    [SerializeField] private List<string> levelScenes = new();
 
     [SerializeField] private Button levelSelectButton, endlessButton, optionsButton;
 
 	private void Awake()
 	{
-        endlessButton.onClick.AddListener(() => TransitionManager.Instance.LoadScene(endlessScene));
+        endlessButton.onClick.AddListener(() => TransitionManager.Instance.LoadScene("EndlessGame"));
 	}
 
 	void Update()

@@ -4,8 +4,7 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 using Powerups;
-using Unity.VisualScripting.Dependencies.Sqlite;
-using Unity.VisualScripting;
+
 public class Player : MonoBehaviour
 {
     private CircleCollider2D coll;
@@ -100,7 +99,11 @@ public class Player : MonoBehaviour
         if (TimeManager.Instance.paused) return;
         if (!GameHandler.Instance.IsState(GameState.PLAY))
         {
-            if (transform.position.y < Camera.main.transform.position.y - KILL_DISTANCE * 3f) rb.simulated = false;
+            if (transform.position.y < Camera.main.transform.position.y - (KILL_DISTANCE * 2f))
+            {
+                rb.velocity *= 0.99f;
+                rb.gravityScale = 0f;
+            }
             return;
         }
 
