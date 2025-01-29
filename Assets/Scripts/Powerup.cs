@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Powerups
 {
 	// should've used scriptable objects, but whatever
-
+	//[System.Serializable]
     public abstract class Powerup
     {
 		public static bool DEBUG = false;
@@ -22,13 +22,14 @@ namespace Powerups
 		public Vector2 spriteoffset = Vector2.zero;
 		public float spriteScale = 1f;
 
-		private ActivePowerupUI activeUI = null;
+		private List<PowerupUI> activeUI = new();
 
 		private bool over = false;
 
         // when powerup is applied
         public void Start()
 		{
+			over = false;
             ResetTimer();
             OnStart();
 		}
@@ -70,14 +71,19 @@ namespace Powerups
 		public void ResetTimer()
 		{
 			timer = 0f;
-			if (activeUI != null) activeUI.timer = 0f;
+			
+			foreach (PowerupUI ui in activeUI)
+			{
+				if (ui == null) continue;
+				ui.timer = 0;
+			}
 		}
 
-		public void AddUI(ActivePowerupUI g)
+		public void AddUI(PowerupUI g)
 		{
 			if (!timed) return;
 
-			activeUI = g;
+			activeUI.Add(g);
 		}
     }
 

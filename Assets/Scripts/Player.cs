@@ -42,11 +42,36 @@ public class Player : MonoBehaviour
     private bool firstShotSuper = true;
 
     private List<Powerup> powerups = new();
+
+    //[SerializeField] private Transform bulletUIContainer;
+    //[SerializeField] private SpriteRenderer bulletUIPrefab;
+    //private List<SpriteRenderer> bulletUIList = new();
+
+    private static float SHIELD_SAVE_VELOCITY = 7f;
     
     private void Awake()
     {
         coll = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+
+        /*
+        if (ammoEnabled)
+        {
+            for (int i = 0; i < maxAmmo; i++)
+            {
+                float angle = ((float)i / maxAmmo) * 2 * Mathf.PI;
+                SpriteRenderer bullet = Instantiate(bulletUIPrefab);
+
+                bullet.transform.localPosition = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * 0.7f;
+                print(angle);
+                print(new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)));
+
+				bullet.transform.SetParent(bulletUIContainer);
+
+                bulletUIList.Add(bullet);
+            }
+        }
+        */
     }
 
     // called on init
@@ -69,9 +94,11 @@ public class Player : MonoBehaviour
 	private void Update()
     {
         if (TimeManager.Instance.paused || GameHandler.Instance.IsState(GameState.OVER)) return;
+        //UpdateBulletUI();
 
         for (int i = 0; i < powerups.Count; i++)
 		{
+            print(powerups);
             Powerup p = powerups[i];
             bool powerupOver = !p.Update();
             if (powerupOver)
@@ -80,6 +107,7 @@ public class Player : MonoBehaviour
                 i--;
             }
 		}
+
         
         Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 relative = target - transform.position;
@@ -107,9 +135,20 @@ public class Player : MonoBehaviour
             return;
         }
 
-		if (transform.position.y < Camera.main.transform.position.y - KILL_DISTANCE) { Die(); return; }
+		if (transform.position.y < Camera.main.transform.position.y - KILL_DISTANCE) {
+            // save if shielded
+            if (health > 1)
+            {
+                TakeDamage();
+                rb.velocity = new Vector2(rb.velocity.x, SHIELD_SAVE_VELOCITY);
+            }
+            else {
+                Die();
+                return;
+            }
+        }
 
-		if (ControlManager.Controls.game.shoot.WasPressedThisFrame() && (!ammoEnabled || ammo > 0))
+		if (ControlManager.WasShootPressedThisFrame() && (!ammoEnabled || ammo > 0))
 		{
             ShootBullet();
 		}
@@ -117,12 +156,17 @@ public class Player : MonoBehaviour
 
     public void AddAmmo(int count)
 	{
-        ammo = Mathf.Min((ammo + count), maxAmmo);
+        // unused, caused audio bug and not sure its a big deal (overpolish)
+		//AudioManager.PlaySoundGroup("GetAmmo", 0.2f);
+
+		ammo = Mathf.Min((ammo + count), maxAmmo);
 	}
 
     public void RefillAmmo()
     {
-        ammo = maxAmmo;
+		AudioManager.PlaySoundGroup("RefillAmmo");
+
+		ammo = maxAmmo;
     }
 
     void ShootBullet()
@@ -139,6 +183,8 @@ public class Player : MonoBehaviour
         }
 
         if (ammoEnabled) ammo--;
+
+        AudioManager.PlaySoundGroup("Shoot");
 
         CreateBullet();
     }
@@ -157,9 +203,14 @@ public class Player : MonoBehaviour
 
         health--;
 
-        if (shieldSprite.gameObject.activeSelf) shieldSprite.gameObject.SetActive(false);
+        if (shieldSprite.gameObject.activeSelf)
+        {
+            shieldSprite.gameObject.SetActive(false);
 
-		if (health <= 0)
+            AudioManager.PlaySoundGroup("ShieldHit");
+        }
+
+            if (health <= 0)
         {
             Die();
             return;
@@ -188,6 +239,8 @@ public class Player : MonoBehaviour
 
         ParticleManager.DestroyAfterDuration(ParticleManager.CreateParticleSystem("PlayerDeathBurst", transform.position, transform));
         ParticleManager.CreateParticleSystem("Flames", transform.position, transform);
+
+        AudioManager.PlaySoundGroup("Die", 0.3f);
 		//gameObject.SetActive(false);
 		//Destroy(gameObject);
 	}
@@ -217,7 +270,7 @@ public class Player : MonoBehaviour
 
         if (powerup.timed)
         {
-            powerup.AddUI(PlayerUIManager.Instance.CreateActivePowerupUI(powerup));
+            PlayerUIManager.Instance.AddPowerupUI(powerup);
         }
     }
 
@@ -260,6 +313,16 @@ public class Player : MonoBehaviour
         // kill tag for instakills like in levels
         if (collision.CompareTag("Kill")) Die();
     }
+
+    /*
+    private void UpdateBulletUI()
+    {
+        for (int i = 0; i < bulletUIList.Count; i++)
+		{
+			bulletUIList[i].color = (i < ammo) ? Color.yellow : new Color(0.1f, 0.1f, 0.1f, bulletUIList[i].color.a);
+		}
+    }
+    */
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{

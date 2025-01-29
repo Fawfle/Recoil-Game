@@ -17,7 +17,7 @@ public class TransitionManager : MonoBehaviour
 
 	[HideInInspector] public static bool transitioning = false;
 
-	public static bool DEBUG = true;
+	public static bool DEBUG = false;
 
 	private void Awake()
 	{
@@ -25,6 +25,8 @@ public class TransitionManager : MonoBehaviour
 		else Instance = this;
 
 		anim = GetComponent<Animator>();
+		// scaled/unscaled used for pausing game issues
+		//anim.updateMode = AnimatorUpdateMode.UnscaledTime;
 	}
 
 	public void LoadScene(String scene)
@@ -43,12 +45,16 @@ public class TransitionManager : MonoBehaviour
 		if (transitioning) yield break;
 
 		TransitionStart?.Invoke();
+
+		if (Time.timeScale == 0) anim.updateMode = AnimatorUpdateMode.UnscaledTime;
 		anim.Play("TransitionIn");
 		
 		if (DEBUG) print("Loading Scene: " + name);
 
 		transitioning = true;
-		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * anim.GetCurrentAnimatorStateInfo(0).speed);
+		yield return new WaitForSecondsRealtime(anim.GetCurrentAnimatorStateInfo(0).length * anim.GetCurrentAnimatorStateInfo(0).speed);
+
+		if (Time.timeScale == 0) anim.updateMode = AnimatorUpdateMode.Normal;
 
 		SceneManager.LoadScene(name);
 	}
@@ -56,7 +62,7 @@ public class TransitionManager : MonoBehaviour
 	public void SceneLoaded(Scene scene, LoadSceneMode mode)
 	{
 		if (!transitioning) return;
-		print(transitioning);
+		Time.timeScale = 1.0f;
 		StartCoroutine(SceneLoadedRoutine(scene));
 	}
 
@@ -69,7 +75,7 @@ public class TransitionManager : MonoBehaviour
 
 		if (DEBUG) print("Loaded Scene: " + scene.name);
 
-		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * anim.GetCurrentAnimatorStateInfo(0).speed);
+		yield return new WaitForSecondsRealtime(anim.GetCurrentAnimatorStateInfo(0).length * anim.GetCurrentAnimatorStateInfo(0).speed * 0.3f);
 
 		TransitionEnd?.Invoke();
 		transitioning = false;

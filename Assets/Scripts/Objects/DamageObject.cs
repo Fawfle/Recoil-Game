@@ -26,6 +26,9 @@ public class DamageObject : MonoBehaviour, IShootable, ICollidable
 		shape.texture = sr.sprite.texture;
 
 		if (!DOTween.IsTweening(Camera.main)) Camera.main.DOShakePosition(0.5f, 0.5f, 12, fadeOut: true);
+
+		AudioManager.PlaySoundGroup("DestroyDamageObject");
+
         Destroy(gameObject);
 	}
 

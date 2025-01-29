@@ -4,23 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 public class EndlessLevelMenuManager : MonoBehaviour
 {
+	[Header("Game Start")]
+	public TextMeshProUGUI introText;
+
 	[Header("Game Active")]
 	public TextMeshProUGUI scoreHeightText;
 
 
 	[Header("Game Over")]
 	public GameObject gameOverMenu;
-    public Button retryButton, menuButton;
+	public GameObject leaderboardMenu;
+    public Button retryButton, menuButton, leaderboardButton, leaderboardBackButton;
 
 	public TextMeshProUGUI scoreText, highScoreText;
+
+	private Menu menu;
 
     void Awake()
     {
         retryButton.onClick.AddListener(() => TransitionManager.Instance.ReloadScene());
 		menuButton.onClick.AddListener(() => TransitionManager.Instance.LoadScene("MainMenu"));
+
+		leaderboardButton.onClick.AddListener(() => SetMenu(Menu.Leaderboard));
+		leaderboardBackButton.onClick.AddListener(() => SetMenu(Menu.GameOver));
 	}
 
 	private void Update()
@@ -30,32 +40,62 @@ public class EndlessLevelMenuManager : MonoBehaviour
 		scoreHeightText.text = Mathf.Floor(GameHandler.Instance.maxPlayerHeight * 10f).ToString();
 	}
 
+	private void SetMenu(Menu m)
+	{
+		menu = m;
+
+		gameOverMenu.SetActive(menu == Menu.GameOver);
+		leaderboardMenu.SetActive(menu == Menu.Leaderboard);
+
+		if (menu == Menu.Leaderboard)
+		{
+			LeaderboardManager.Instance.SetLeaderboardMenu(LeaderboardManager.Menu.Local);
+		}
+	}
 
 	private void OnGameInit()
 	{
-		gameOverMenu.SetActive(false);
+		SetMenu(Menu.None);
+
+		introText.gameObject.SetActive(true);
+	}
+
+	private void OnGamePlay()
+	{
+		introText.gameObject.SetActive(false);
 	}
 
 	private void OnGameOver()
 	{
-		gameOverMenu.SetActive(true);
+		SetMenu(Menu.GameOver);
 		gameOverMenu.GetComponent<Animator>().Play("Slide In");
 
-		scoreHeightText.text = GameHandler.Instance.score.ToString();
+		scoreHeightText.text = GameHandler.Instance.displayScore.ToString();
+		scoreHeightText.CrossFadeAlpha(0f, 2f, false);
 
-		scoreText.text = GameHandler.Instance.score.ToString();
-		highScoreText.text = SaveManager.save.highScore.ToString();
+		scoreText.text = GameHandler.Instance.displayScore.ToString();
+
+		highScoreText.text = Math.Floor(SaveManager.save.highScore).ToString();
 	}
 
 	private void OnEnable()
 	{
 		GameHandler.Instance.OnGameInit += OnGameInit;
+		GameHandler.Instance.OnGamePlay += OnGamePlay;
 		GameHandler.Instance.OnGameOver += OnGameOver;
 	}
 
 	private void OnDisable()
 	{
 		GameHandler.Instance.OnGameInit -= OnGameInit;
+		GameHandler.Instance.OnGamePlay -= OnGamePlay;
 		GameHandler.Instance.OnGameOver -= OnGameOver;
+	}
+
+	enum Menu
+	{
+		None,
+		GameOver,
+		Leaderboard
 	}
 }

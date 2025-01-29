@@ -11,4 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameEndless.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 7de75eff09ae9a840997d7b2945b97dc, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2d972ded4ad431f49ae1f0d38ec23661, type: 3}

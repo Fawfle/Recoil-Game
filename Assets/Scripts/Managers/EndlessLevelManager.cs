@@ -5,11 +5,13 @@ using UnityEngine;
 public class EndlessLevelManager : MonoBehaviour
 {
     public static EndlessLevelManager Instance { get; private set; }
+
 	/*
     [Header("Explosives")]
     [SerializeField] private GameObject explosive;
     [SerializeField] private Transform explosiveContainer;
     */
+
 	public Transform itemContainer; // parent container
 
 	public List<LevelObjectData> levelObjects = new();
@@ -70,6 +72,7 @@ public class EndlessLevelManager : MonoBehaviour
 	{
 		while (item.count < item.maxCount)
 		{
+			// Fix overlapping issue on init
 			var g = item.AddNew();
 
 			if (!item.modifiable) return;

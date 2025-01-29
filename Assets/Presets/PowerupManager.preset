@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PowerupManager
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 9e0724d1df495994ca37d6cf1b2eaea7, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.size
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[0].name
+    value: Recoil Up
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[0].duration
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[0].type
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[0].sprite
+    value: 
+    objectReference: {fileID: 21300000, guid: 18a7fbbe89e18b64aba9dfd569b80286, type: 3}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[0].spriteOffset.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[0].spriteOffset.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[0].spriteScale
+    value: 0.25
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[1].name
+    value: Shield
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[1].duration
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[1].type
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[1].sprite
+    value: 
+    objectReference: {fileID: 21300000, guid: 8cdff340a49e2f440921e6fe4d4d894e, type: 3}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[1].spriteOffset.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[1].spriteOffset.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[1].spriteScale
+    value: 0.1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[2].name
+    value: Infinite Ammo
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[2].duration
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[2].type
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[2].sprite
+    value: 
+    objectReference: {fileID: 21300000, guid: 5ea1ad93d44f73f4d9e63b8b09cf1931, type: 3}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[2].spriteOffset.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[2].spriteOffset.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[2].spriteScale
+    value: 0.8
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []

@@ -1,0 +1,263 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AudioManager
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 4a3e05a45da159a4d9b6b4a2a5ed49a8, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mixer
+    value: 
+    objectReference: {fileID: 24300002, guid: d8b4ffda32a5cfb4ea71d91f49a2a32d, type: 2}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.size
+    value: 9
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[0].name
+    value: Shoot
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[0].soundNames.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[0].soundNames.Array.data[0]
+    value: Shoot1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[1].name
+    value: Die
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[1].soundNames.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[1].soundNames.Array.data[0]
+    value: Die1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[2].name
+    value: Select
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[2].soundNames.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[2].soundNames.Array.data[0]
+    value: Select1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[3].name
+    value: Explosion
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[3].soundNames.Array.size
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[3].soundNames.Array.data[0]
+    value: Explosion1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[3].soundNames.Array.data[1]
+    value: Explosion2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[4].name
+    value: DestroyDamageObject
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[4].soundNames.Array.size
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[4].soundNames.Array.data[0]
+    value: DestroyDamageObject1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[4].soundNames.Array.data[1]
+    value: DestroyDamageObject2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[5].name
+    value: PickupPowerup
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[5].soundNames.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[5].soundNames.Array.data[0]
+    value: PickupPowerup1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[6].name
+    value: RefillAmmo
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[6].soundNames.Array.size
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[6].soundNames.Array.data[0]
+    value: RefillAmmo1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[6].soundNames.Array.data[1]
+    value: RefillAmmo2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[7].name
+    value: GetAmmo
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[7].soundNames.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[7].soundNames.Array.data[0]
+    value: GetAmmo1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[8].name
+    value: ShieldHit
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[8].soundNames.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundGroupList.Array.data[8].soundNames.Array.data[0]
+    value: ShieldHit1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.size
+    value: 13
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[0].name
+    value: Select1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[0].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: 6bb0854afaf68724c922e55bb66bb445, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[1].name
+    value: Select2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[1].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: 56560e480e51f654284cdfa62bf36db8, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[2].name
+    value: RefillAmmo1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[2].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: 19f0d1faf87b59e4397fae00573d0009, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[3].name
+    value: RefillAmmo2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[3].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: 7cd251eccf1e29e408a9c186183efa35, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[4].name
+    value: Explosion1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[4].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: b07ea14d173600f49b36ab48be9682ae, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[5].name
+    value: Explosion2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[5].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: 31b59ac92491e0847b58a0396ee4e936, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[6].name
+    value: Die1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[6].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: de686828264e6bc44958f1a87e0f4a6f, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[7].name
+    value: DestroyDamageObject1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[7].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: 0df237c1158a2764080c925c0f72282a, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[8].name
+    value: DestroyDamageObject2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[8].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: 0c431193697bfbf48b5193e3ee73a168, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[9].name
+    value: PickupPowerup1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[9].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: 5ae3698ae0d47d54a8450169cee916c2, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[10].name
+    value: Shoot1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[10].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: ddb48c1a62d491a4d847971bc91ae9a8, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[11].name
+    value: GetAmmo1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[11].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: 6a6f9c2442c33c846a5cb5570d26af4d, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[12].name
+    value: ShieldHit1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[12].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: c57ea0011bd363b48b971ebf5d140146, type: 3}
+  m_ExcludedProperties: []

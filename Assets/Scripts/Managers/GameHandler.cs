@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UIElements;
 
 public class GameHandler : MonoBehaviour
 {
@@ -14,7 +15,11 @@ public class GameHandler : MonoBehaviour
 
     public Action OnGameInit, OnGamePlay, OnGameOver;
 
-	public int score { get; private set; } = 0;
+	public GameMode mode;
+
+	public float score { get; private set; } = 0;
+
+	public int displayScore { get { return Mathf.FloorToInt(score); } }
 
 	private void Awake()
 	{
@@ -40,14 +45,19 @@ public class GameHandler : MonoBehaviour
 		else if (s == GameState.PLAY) OnGamePlay?.Invoke();
 		else if (s == GameState.OVER)
 		{
-			score = (int)Mathf.Floor(maxPlayerHeight * 10f);
-
-			if (score > SaveManager.save.highScore)
+			if (mode == GameMode.Endless)
 			{
-				SaveManager.WriteHighScoreToSave(score);
+				score = maxPlayerHeight * 10f;
+
+				if (score > SaveManager.save.highScore)
+				{
+					SaveManager.WriteHighScoreToSave(score);
+				}
 			}
 
 			OnGameOver?.Invoke();
+
+			if (mode == GameMode.Endless) { var task = LeaderboardManager.Instance.AddScore(SaveManager.save.highScore); }
 		}
 	}
 
@@ -65,7 +75,7 @@ public class GameHandler : MonoBehaviour
 
 	private void InitFixedUpdate()
 	{
-		if (ControlManager.Controls.game.shoot.WasPressedThisFrame())
+		if (ControlManager.WasShootPressedThisFrame())
 		{
 			SetState(GameState.PLAY);
 		}

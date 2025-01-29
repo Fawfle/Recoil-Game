@@ -46,7 +46,7 @@ public class PowerupManager : MonoBehaviour
 
 	public Powerup GetRandomPowerup()
 	{
-		return powerups[Random.Range(0, powerups.Count)];
+		return powerups[Random.Range(0, powerups.Count)].CloneViaFakeSerialization<Powerup>();
 	}
 
 	[System.Serializable]

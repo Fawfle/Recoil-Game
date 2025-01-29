@@ -21,6 +21,8 @@ public class Explosive : MonoBehaviour, IShootable
 
 		ParticleManager.DestroyAfterDuration(ParticleManager.CreateParticleSystem("Explosion", transform.position, transform.parent));
 
+		AudioManager.PlaySoundGroup("Explosion");
+
 		if (!DOTween.IsTweening(Camera.main)) Camera.main.DOShakePosition(0.5f, 0.5f, 12, fadeOut: true);
 		Destroy(gameObject);
 	}

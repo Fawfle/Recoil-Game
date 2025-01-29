@@ -40,7 +40,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""shoot"",
                     ""type"": ""Button"",
                     ""id"": ""7e5e39b1-a9cd-40d2-a78a-e08f5ff405d6"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""shootAlt"",
+                    ""type"": ""Button"",
+                    ""id"": ""8a5dbf94-1302-4a0f-a3fc-147e6b072654"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -120,7 +129,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""shoot"",
+                    ""action"": ""shootAlt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -133,6 +142,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_game = asset.FindActionMap("game", throwIfNotFound: true);
         m_game_axis = m_game.FindAction("axis", throwIfNotFound: true);
         m_game_shoot = m_game.FindAction("shoot", throwIfNotFound: true);
+        m_game_shootAlt = m_game.FindAction("shootAlt", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -201,12 +211,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
     private readonly InputAction m_game_axis;
     private readonly InputAction m_game_shoot;
+    private readonly InputAction m_game_shootAlt;
     public struct GameActions
     {
         private @PlayerControls m_Wrapper;
         public GameActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @axis => m_Wrapper.m_game_axis;
         public InputAction @shoot => m_Wrapper.m_game_shoot;
+        public InputAction @shootAlt => m_Wrapper.m_game_shootAlt;
         public InputActionMap Get() { return m_Wrapper.m_game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -222,6 +234,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @shoot.started += instance.OnShoot;
             @shoot.performed += instance.OnShoot;
             @shoot.canceled += instance.OnShoot;
+            @shootAlt.started += instance.OnShootAlt;
+            @shootAlt.performed += instance.OnShootAlt;
+            @shootAlt.canceled += instance.OnShootAlt;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -232,6 +247,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @shoot.started -= instance.OnShoot;
             @shoot.performed -= instance.OnShoot;
             @shoot.canceled -= instance.OnShoot;
+            @shootAlt.started -= instance.OnShootAlt;
+            @shootAlt.performed -= instance.OnShootAlt;
+            @shootAlt.canceled -= instance.OnShootAlt;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -253,5 +271,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnAxis(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnShootAlt(InputAction.CallbackContext context);
     }
 }

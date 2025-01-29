@@ -38,6 +38,8 @@ public class PowerupPickup : MonoBehaviour, ICollidable
 		var text = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
 		text.text = powerup.name;
 
+		AudioManager.PlaySoundGroup("PickupPowerup", 0.3f);
+
 		Destroy(gameObject);
 	}
 }

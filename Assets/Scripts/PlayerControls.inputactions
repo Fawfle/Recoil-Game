@@ -18,7 +18,16 @@
                     "name": "shoot",
                     "type": "Button",
                     "id": "7e5e39b1-a9cd-40d2-a78a-e08f5ff405d6",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "shootAlt",
+                    "type": "Button",
+                    "id": "8a5dbf94-1302-4a0f-a3fc-147e6b072654",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -98,7 +107,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "shoot",
+                    "action": "shootAlt",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

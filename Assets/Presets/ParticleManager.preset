@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ParticleManager
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 1c1ac7aa7c9cb7d4db31e32730ef490e, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.size
+    value: 7
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[0].key
+    value: Powerup
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[0].particleSystem
+    value: 
+    objectReference: {fileID: 4117700118265250388, guid: 5770051d088d789449c30b66823006f0, type: 3}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[0].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[1].key
+    value: Explosion
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[1].particleSystem
+    value: 
+    objectReference: {fileID: 5693827851917320671, guid: ef4e6305c98f3dc4084d768ec141e398, type: 3}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[1].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[2].key
+    value: Destroy
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[2].particleSystem
+    value: 
+    objectReference: {fileID: 812509218044165117, guid: f6d483eb42c262741bf45cfb37d84114, type: 3}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[2].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[3].key
+    value: Ammo
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[3].particleSystem
+    value: 
+    objectReference: {fileID: 7409632796408796196, guid: 0b817c3dfbc65a14e9b4804da7a205c1, type: 3}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[3].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[4].key
+    value: Flames
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[4].particleSystem
+    value: 
+    objectReference: {fileID: 6818004193012469134, guid: 0cfbf93996c88284b9925499346c1d8b, type: 3}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[4].loop
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[5].key
+    value: PlayerDeathBurst
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[5].particleSystem
+    value: 
+    objectReference: {fileID: 6799739654065495926, guid: e954122fbcf273149b65ed8bcc15d219, type: 3}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[5].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[6].key
+    value: Bullet
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[6].particleSystem
+    value: 
+    objectReference: {fileID: 5899282810695575837, guid: 7570adc183426bb49ba12c420012b5cb, type: 3}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[6].loop
+    value: 0
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []
