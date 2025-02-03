@@ -60,11 +60,12 @@ public class PlayerUIManager : MonoBehaviour
 
 	private PowerupUI CreatePowerupUI(Powerup p, PowerupUI prefab, Transform parent)
 	{
-		if (!p.timed) return null;
+		if (!p.uiEnabled) return null;
 		PowerupUI pUI = Instantiate(prefab, parent);
 
 		pUI.durationSeconds = p.durationSeconds;
 		pUI.icon.sprite = p.sprite;
+		pUI.timed = p.timed;
 
 		p.AddUI(pUI);
 
@@ -73,11 +74,11 @@ public class PlayerUIManager : MonoBehaviour
 
 	private void OnEnable()
 	{
-		GameHandler.Instance.OnGameOver += DestroyPowerupTimerUI;
+		GameHandler.Instance.OnGameEnd += DestroyPowerupTimerUI;
 	}
 
 	private void OnDisable()
 	{
-		GameHandler.Instance.OnGameOver -= DestroyPowerupTimerUI;
+		GameHandler.Instance.OnGameEnd -= DestroyPowerupTimerUI;
 	}
 }

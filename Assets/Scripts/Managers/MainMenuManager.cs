@@ -68,7 +68,7 @@ public class MainMenuManager : MonoBehaviour
         for (int i = 0; i < PAGE_LEVELS; i++)
         {
             int levelIndex = i;
-            if (levelIndex > LevelsManager.levels.Length) break;
+            if (levelIndex >= LevelsManager.Levels.Count) break;
 
             var ui = Instantiate(levelSelectUIPrefab, levelSelectUIContainer);
 
@@ -90,14 +90,14 @@ public class MainMenuManager : MonoBehaviour
 
 	private void OnVolumeSliderUpdate(float value)
     {
-        SaveManager.WriteVolumeToSave(value);
+        SaveManager.SetSaveVolume(value);
 
         AudioManager.SetAudioMixerVolume(value);
     }
 
     private void OnClickToShootToggleUpdate(bool isOn)
     {
-        SaveManager.WriteClickToShootToSave(isOn);
+        SaveManager.SetSaveClickToShoot(isOn);
     }
 
     #endregion

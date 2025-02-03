@@ -154,7 +154,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: soundList.Array.size
-    value: 13
+    value: 14
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: soundList.Array.data[0].name
@@ -260,4 +260,12 @@ Preset:
     propertyPath: soundList.Array.data[12].clip
     value: 
     objectReference: {fileID: 8300000, guid: c57ea0011bd363b48b971ebf5d140146, type: 3}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[13].name
+    value: Goal
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: soundList.Array.data[13].clip
+    value: 
+    objectReference: {fileID: 8300000, guid: 4c7e093bba3d0b747ac88ff5ee2cb0bd, type: 3}
   m_ExcludedProperties: []

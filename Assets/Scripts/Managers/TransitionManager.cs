@@ -19,6 +19,10 @@ public class TransitionManager : MonoBehaviour
 
 	public static bool DEBUG = false;
 
+
+	public static bool sceneReloaded { get; private set; } = false;
+	public static string lastSceneLoaded { get; private set; } = null;
+
 	private void Awake()
 	{
 		if (Instance != null && Instance != this) { Destroy(this); return; }
@@ -61,6 +65,9 @@ public class TransitionManager : MonoBehaviour
 
 	public void SceneLoaded(Scene scene, LoadSceneMode mode)
 	{
+		sceneReloaded = lastSceneLoaded == scene.name;
+		lastSceneLoaded = scene.name;
+
 		if (!transitioning) return;
 		Time.timeScale = 1.0f;
 		StartCoroutine(SceneLoadedRoutine(scene));

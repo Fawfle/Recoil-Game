@@ -10,8 +10,11 @@ public class PowerupUI : MonoBehaviour
 	[SerializeField] private Image progressImage;
 	public Image icon;
 
+	[HideInInspector] public bool timed = true;
+
 	public float durationSeconds = 1f;
-	public float timer = 0f;
+	public float progress = 0f;
+
 	private void Awake()
 	{
 		rectTransform = GetComponent<RectTransform>();
@@ -19,16 +22,19 @@ public class PowerupUI : MonoBehaviour
 
 	private void Update()
 	{
-		timer += Time.deltaTime;
+		if (timed)
+		{
+			progress += Time.deltaTime / durationSeconds;
+		}
 
-		if (timer >= durationSeconds)
+		if (progress >= 1f)
 		{
 			Destroy(gameObject);
 			return;
 		}
 
-		if (progressType == ProgressType.Size) progressImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (1 - timer / durationSeconds) * rectTransform.sizeDelta.y);
-		else if (progressType == ProgressType.Radial) progressImage.fillAmount = 1f - timer/durationSeconds;
+		if (progressType == ProgressType.Size) progressImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (1 - progress) * rectTransform.sizeDelta.y);
+		else if (progressType == ProgressType.Radial) progressImage.fillAmount = 1f - progress;
 	}
 
 	private enum ProgressType

@@ -133,4 +133,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a0de52e30e0e349902d198e0a39e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootable: 1
+  destructable: 1
+  refreshAmmo: 1

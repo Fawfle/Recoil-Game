@@ -26,7 +26,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.size
-    value: 3
+    value: 4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[0].name
@@ -57,6 +57,10 @@ Preset:
     value: 0.25
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[0].spriteRotation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: powerupData.Array.data[1].name
     value: Shield
     objectReference: {fileID: 0}
@@ -85,12 +89,16 @@ Preset:
     value: 0.1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[1].spriteRotation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: powerupData.Array.data[2].name
     value: Infinite Ammo
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[2].duration
-    value: 3
+    value: 4.5
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[2].type
@@ -111,5 +119,41 @@ Preset:
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[2].spriteScale
     value: 0.8
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[2].spriteRotation
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[3].name
+    value: Shotgun
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[3].duration
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[3].type
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[3].sprite
+    value: 
+    objectReference: {fileID: 21300000, guid: 8b6d5a22f49ecd343b9e59c335c99ee1, type: 3}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[3].spriteOffset.x
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[3].spriteOffset.y
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[3].spriteScale
+    value: 0.15
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: powerupData.Array.data[3].spriteRotation
+    value: 0
     objectReference: {fileID: 0}
   m_ExcludedProperties: []

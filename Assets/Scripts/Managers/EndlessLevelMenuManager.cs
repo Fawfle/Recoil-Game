@@ -35,7 +35,7 @@ public class EndlessLevelMenuManager : MonoBehaviour
 
 	private void Update()
 	{
-		if (GameHandler.Instance.IsState(GameState.OVER)) return;
+		if (GameHandler.Instance.IsEndState()) return;
 
 		scoreHeightText.text = Mathf.Floor(GameHandler.Instance.maxPlayerHeight * 10f).ToString();
 	}

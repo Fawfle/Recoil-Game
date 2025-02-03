@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class SaveManager
@@ -33,25 +34,76 @@ public static class SaveManager
 		return false;
 	}
 
-	public static void WriteHighScoreToSave(double score)
+	public static void UpdateLevelCompleted(SaveData.LevelCompleteData data)
+	{
+		if (!HasCompletedLevel(data.levelKey))
+		{
+			save.completedLevels.Add(data);
+
+			save.completedLevels.Sort((a, b) => a.levelIndex - b.levelIndex);
+		} else
+		{
+			foreach (var level in save.completedLevels)
+			{
+				if (level.levelKey == data.levelKey)
+				{
+					// update stats
+					break;
+				}
+			}
+		}
+
+		WriteSaveToSave();
+	}
+
+	public static void AddDeltaTime()
+	{
+		save.playTime += Time.deltaTime;
+	}
+
+	public static void IncrementShotsFired()
+	{
+		save.shotsFired++;
+	}
+
+	public static void IncrementDeaths()
+	{
+		save.deaths++;
+
+		//WriteToSave(save); for "performance"
+	}
+
+	public static void IncrementEndlessRuns()
+	{
+		save.endlessRuns++;
+
+		//WriteToSave(save); for "performance"
+	}
+
+	public static void SetSaveHighScore(double score, bool write = true)
 	{
 		save.highScore = score;
 
-		WriteToSave(save);
+		if (write) WriteSaveToSave();
 	}
 
-	public static void WriteVolumeToSave(float value)
+	public static void SetSaveVolume(float value, bool write = true)
 	{
 		save.volume = value;
 
-		WriteToSave(save);
+		if (write) WriteSaveToSave();
 	}
 
-	public static void WriteClickToShootToSave(bool isOn)
+	public static void SetSaveClickToShoot(bool isOn, bool write = true)
 	{
 		save.clickToShootEnabled = isOn;
 
-		WriteToSave(save);
+		if (write) WriteSaveToSave();
+	}
+
+	public static bool WriteSaveToSave()
+	{
+		return WriteToSave(save);
 	}
 
 	public static bool WriteToSave(SaveData data)

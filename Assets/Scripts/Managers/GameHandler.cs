@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
@@ -11,11 +12,13 @@ public class GameHandler : MonoBehaviour
 	public Player player;
 	public BackgroundScroller background;
 
-    public GameState state;
+    [SerializeField] private GameState state;
 
-    public Action OnGameInit, OnGamePlay, OnGameOver;
+    public Action OnGameInit, OnGamePlay, OnGameEnd, OnGameOver, onLevelComplete;
 
-	public GameMode mode;
+	[SerializeField] private GameMode mode;
+
+	// probably shouldn't need to handle states and scores (should've put them in endlessLevelManager), but bad code is whatever
 
 	public float score { get; private set; } = 0;
 
@@ -29,7 +32,7 @@ public class GameHandler : MonoBehaviour
 
 	private void Start()
 	{
-		SetState(GameState.INIT);
+		SetState(GameState.Init);
 	}
 
 	public bool IsState(GameState s)
@@ -37,13 +40,23 @@ public class GameHandler : MonoBehaviour
 		return state == s;
 	}
 
+	public bool IsEndState()
+	{
+		return state == GameState.Over || state == GameState.LevelComplete;
+	}
+
+	public bool IsGameMode(GameMode m)
+	{
+		return mode == m;
+	}
+
 	public void SetState(GameState s)
 	{
         state = s;
 
-		if (s == GameState.INIT) OnGameInit?.Invoke();
-		else if (s == GameState.PLAY) OnGamePlay?.Invoke();
-		else if (s == GameState.OVER)
+		if (s == GameState.Init) OnGameInit?.Invoke();
+		else if (s == GameState.Play) OnGamePlay?.Invoke();
+		else if (s == GameState.Over)
 		{
 			if (mode == GameMode.Endless)
 			{
@@ -51,18 +64,30 @@ public class GameHandler : MonoBehaviour
 
 				if (score > SaveManager.save.highScore)
 				{
-					SaveManager.WriteHighScoreToSave(score);
+					SaveManager.SetSaveHighScore(score, false);
 				}
+
+				SaveManager.WriteSaveToSave();
+
+				_ = LeaderboardManager.Instance.AddScore(SaveManager.save.highScore);
 			}
 
+			OnGameEnd?.Invoke();
 			OnGameOver?.Invoke();
+		}
+		else if (s == GameState.LevelComplete)
+		{
+			OnGameEnd?.Invoke();
+			onLevelComplete?.Invoke();
 
-			if (mode == GameMode.Endless) { var task = LeaderboardManager.Instance.AddScore(SaveManager.save.highScore); }
+			SaveData.LevelCompleteData completeData = new(LevelsManager.GetCurrentLevelKey(), LevelsManager.GetCurrentLevelIndex());
+			SaveManager.UpdateLevelCompleted(completeData);
 		}
 	}
 
 	private void Update()
 	{
+		SaveManager.AddDeltaTime();
 		//if (state == GameState.INIT) InitUpdate();
 		//if (state == GameState.PLAY) PlayUpdate();
 		//if (state == GameState.OVER) OverUpdate();
@@ -70,14 +95,14 @@ public class GameHandler : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (IsState(GameState.INIT)) InitFixedUpdate();
+		if (IsState(GameState.Init)) InitFixedUpdate();
 	}
 
 	private void InitFixedUpdate()
 	{
 		if (ControlManager.WasShootPressedThisFrame())
 		{
-			SetState(GameState.PLAY);
+			SetState(GameState.Play);
 		}
 	}
 
@@ -93,9 +118,10 @@ public class GameHandler : MonoBehaviour
 
 public enum GameState
 {
-    INIT, // reset/prep
-    PLAY, // playing
-    OVER // game oever
+    Init, // reset/prep
+    Play, // playing
+    Over, // game over
+	LevelComplete // only for levels
 }
 
 // loads corresponding game elements/scene

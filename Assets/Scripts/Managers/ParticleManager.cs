@@ -21,9 +21,9 @@ public class ParticleManager : MonoBehaviour
 		}
 	}
 
-	public static ParticleSystem DestroyAfterDuration(ParticleSystem p)
+	private static ParticleSystem DestroyAfterDuration(ParticleSystem p)
 	{
-		Destroy(p, p.main.duration);
+		Destroy(p.gameObject, p.main.duration);
 
 		return p;
 	}
@@ -47,11 +47,13 @@ public class ParticleManager : MonoBehaviour
 		return p;
 	}
 
-	public static ParticleSystem CreateParticleSystem(string key, Vector2 position, Transform parent)
+	public static ParticleSystem CreateParticleSystem(string key, Vector2 position, Transform parent, bool destroyAfterDuration = true)
 	{
 		ParticleSystem p = CreateParticleSystem(key, position);
 
 		p.transform.SetParent(parent);
+
+		if (destroyAfterDuration) DestroyAfterDuration(p);
 
 		return p;
 	}

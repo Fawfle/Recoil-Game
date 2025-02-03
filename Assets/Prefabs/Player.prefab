@@ -36,7 +36,6 @@ Transform:
   - {fileID: 2263680638682285731}
   - {fileID: 5290744546669352559}
   - {fileID: 4414449580246349904}
-  - {fileID: 6426570770936032925}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &663588254714019195
@@ -167,10 +166,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunAnchor: {fileID: 5290744546669352559}
   gun: {fileID: 927745119327064088}
-  bulletPrefab: {fileID: 6806426477767653343, guid: 1bac6119b4449a34c997c0f00df80baf, type: 3}
+  bulletPrefab: {fileID: 8225766557852497488, guid: 1bac6119b4449a34c997c0f00df80baf, type: 3}
   bulletContainer: {fileID: 0}
   shieldSprite: {fileID: 1531398275129475708}
-  screenWrap: 1
   health: 1
   recoilForce: 5
   velocityConservationCoefficient: 0.25
@@ -180,8 +178,7 @@ MonoBehaviour:
   ammo: 6
   bulletSpeed: 5
   bulletLifetime: 2
-  bulletUIContainer: {fileID: 6426570770936032925}
-  bulletUIPrefab: {fileID: 6509071980396159461, guid: 91985a59fdd0f2141ac977611fd87401, type: 3}
+  firstShotSuper: 1
 --- !u!1 &4820457263183820989
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,37 +347,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &4992252109682384572
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6426570770936032925}
-  m_Layer: 0
-  m_Name: Bullets
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6426570770936032925
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4992252109682384572}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2970183690230950259}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7210903101574915925
 GameObject:
   m_ObjectHideFlags: 0

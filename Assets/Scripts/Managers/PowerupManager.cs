@@ -33,12 +33,16 @@ public class PowerupManager : MonoBehaviour
 				case PowerupType.InfiniteAmmo:
 					p = new InfiniteAmmoPowerup();
 					break;
+				case PowerupType.Shotgun:
+					p = new ShotgunPowerup();
+					break;
 			}
 			p.name = pData.name;
 			p.durationSeconds = pData.duration;
 			p.sprite = pData.sprite;
-			p.spriteoffset = pData.spriteOffset;
+			p.spriteOffset = pData.spriteOffset;
 			p.spriteScale = pData.spriteScale;
+			p.spriteRotation = pData.spriteRotation;
 
 			powerups.Add(p);
 		}
@@ -58,6 +62,7 @@ public class PowerupManager : MonoBehaviour
 		public Sprite sprite;
 		public Vector2 spriteOffset = Vector2.zero;
 		public float spriteScale = 1f;
+		public float spriteRotation = 0f;
 	}
 
 
@@ -65,6 +70,7 @@ public class PowerupManager : MonoBehaviour
 	{
 		Recoil,
 		Shield,
-		InfiniteAmmo
+		InfiniteAmmo,
+		Shotgun
 	}
 }

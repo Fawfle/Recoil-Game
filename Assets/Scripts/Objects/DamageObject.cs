@@ -7,7 +7,11 @@ public class DamageObject : MonoBehaviour, IShootable, ICollidable
 {
 	private SpriteRenderer sr;
 
-	public bool shootable = false;
+	public bool destructable = false;
+
+	public bool refreshAmmo = true;
+
+	public bool replenishAmmo => refreshAmmo;
 
 	private void Awake()
 	{
@@ -16,14 +20,14 @@ public class DamageObject : MonoBehaviour, IShootable, ICollidable
 
 	private void DestroySelf()
 	{
-		ParticleSystem p = ParticleManager.CreateParticleSystem("Destroy", transform.position, transform.parent);
+		ParticleSystem p = ParticleManager.CreateParticleSystem("Destroy", transform.position, transform.parent, true);
 		// set sprite/texture for particles to match
 		ParticleSystem.MainModule main = p.main;
 		main.startColor = sr.color;
 
 		ParticleSystem.ShapeModule shape = p.shape;
 		shape.sprite = sr.sprite;
-		shape.texture = sr.sprite.texture;
+		shape.texture = sr.sprite.texture; // will sample texture to decide what colors to set particles to (on top of startColor)
 
 		if (!DOTween.IsTweening(Camera.main)) Camera.main.DOShakePosition(0.5f, 0.5f, 12, fadeOut: true);
 
@@ -35,12 +39,12 @@ public class DamageObject : MonoBehaviour, IShootable, ICollidable
 	public void OnCollide(Player player)
 	{
 		player.TakeDamage();
-		if (player != null || shootable) DestroySelf();
+		if (destructable) DestroySelf();
 	}
 
     public void OnShot()
 	{
-		if (!shootable) return;
+		if (!destructable) return;
 		DestroySelf();
 	}
 }

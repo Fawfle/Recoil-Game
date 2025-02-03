@@ -8,7 +8,7 @@ public class AmmoRefill : MonoBehaviour, ICollidable
 	{
 		player.RefillAmmo();
 
-		ParticleManager.DestroyAfterDuration(ParticleManager.CreateParticleSystem("Ammo", transform.position, transform.parent));
+		ParticleManager.CreateParticleSystem("Ammo", transform.position, transform.parent, true);
 
 		Destroy(gameObject);
 	}

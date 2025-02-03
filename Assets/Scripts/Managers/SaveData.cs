@@ -6,6 +6,13 @@ public class SaveData
 {
 	public double highScore = 0;
 
+	public int deaths = 0;
+	public int shotsFired = 0;
+
+	public double playTime = 0f;
+
+	public int endlessRuns = 0;
+
 	public float volume = 1f;
 
 	public bool clickToShootEnabled = false;
@@ -17,5 +24,12 @@ public class SaveData
 	public class LevelCompleteData
 	{
 		public string levelKey;
+		public int levelIndex;
+
+		public LevelCompleteData(string levelKey, int levelIndex)
+		{
+			this.levelKey = levelKey;
+			this.levelIndex = levelIndex;
+		}
 	}
 }

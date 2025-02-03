@@ -8,6 +8,8 @@ public class Explosive : MonoBehaviour, IShootable
 	public float range = 3;
 	public float strength = 1;
 
+	public bool replenishAmmo => true;
+
 	public void OnShot()
 	{
 		if (GameHandler.Instance.player == null) return;
@@ -19,7 +21,7 @@ public class Explosive : MonoBehaviour, IShootable
 			GameHandler.Instance.player.GetComponent<Rigidbody2D>().velocity += (range - distance) * strength * direction;
 		}
 
-		ParticleManager.DestroyAfterDuration(ParticleManager.CreateParticleSystem("Explosion", transform.position, transform.parent));
+		ParticleManager.CreateParticleSystem("Explosion", transform.position, transform.parent, true);
 
 		AudioManager.PlaySoundGroup("Explosion");
 

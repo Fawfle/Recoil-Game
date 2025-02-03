@@ -34,7 +34,11 @@ public class EndlessLevelManager : MonoBehaviour
 	[SerializeField] private float spinnerSpeed = 0.5f;
 	[SerializeField] private float waypointSpeed = 0.5f;
 
-	public static readonly float LEVEL_BOUNDS = 4.5f;
+	// level bounds for spawning objects
+	public static readonly float SPAWN_HORIZONTAL_LEVEL_BOUNDS = 4.5f;
+
+	// bounds of level/camera
+	public static readonly float LEVEL_BOUNDS = 5.5f;
 
 	private void Awake()
 	{
@@ -52,6 +56,8 @@ public class EndlessLevelManager : MonoBehaviour
 
 			SpawnItemsUntilFull(item);
 		}
+
+		SaveManager.IncrementEndlessRuns();
     }
 
 	void Update()
@@ -132,7 +138,7 @@ public class EndlessLevelManager : MonoBehaviour
 		[Tooltip("Height to begin spawning")]
 		public float spawnHeight = 0;
 
-		public static readonly float DESTROY_DISTANCE = 7f;
+		public static readonly float DESTROY_DISTANCE = 9f;
 		public float maxCount = 8f;
 
 		[Tooltip("Distance from other objects required to spawn")]
@@ -141,7 +147,7 @@ public class EndlessLevelManager : MonoBehaviour
 		[Tooltip("Coefficient of height for decreasing spawn distance")]
 		[Range(0f, 1f)]
 		public float frequencyScalingCoefficient = 0;
-		private static readonly float SCALING_COEFFICIENT = 0.0000005f; // scaling for height
+		private static readonly float SCALING_COEFFICIENT = 0.0005f; // scaling for height
 
 		public bool modifiable = false;
 
@@ -160,6 +166,7 @@ public class EndlessLevelManager : MonoBehaviour
 		{
 			if (container == null) { Init(); return null; }
 
+			// coefficient is a logistic function from 1 to 1-frefrequencyScalingCoefficient
 			spawnHeight += Random.Range(spawnDistanceMin, spawnDistanceMax) * ((1 - frequencyScalingCoefficient) + frequencyScalingCoefficient * (1 / (1 + spawnHeight * SCALING_COEFFICIENT)));
 
 			GameObject g = GameObject.Instantiate(obj);
@@ -170,7 +177,7 @@ public class EndlessLevelManager : MonoBehaviour
 				{
 					if (i == 99) Debug.Log("Endless level manager item failed to get minimumSpawnDistance position");
 
-					Vector3 testPosition = new Vector3(Random.Range(-EndlessLevelManager.LEVEL_BOUNDS, EndlessLevelManager.LEVEL_BOUNDS), spawnHeight, 0);
+					Vector3 testPosition = new Vector3(Random.Range(-EndlessLevelManager.SPAWN_HORIZONTAL_LEVEL_BOUNDS, EndlessLevelManager.SPAWN_HORIZONTAL_LEVEL_BOUNDS), spawnHeight, 0);
 
 					Collider2D[] collisions = Physics2D.OverlapCircleAll(testPosition, minimumSpawnDistance);
 					if (collisions.Length > 0) continue;
@@ -181,12 +188,15 @@ public class EndlessLevelManager : MonoBehaviour
 			}
 			else
 			{
-				g.transform.position = new Vector3(Random.Range(-EndlessLevelManager.LEVEL_BOUNDS, EndlessLevelManager.LEVEL_BOUNDS), spawnHeight, 0);
+				g.transform.position = new Vector3(Random.Range(-EndlessLevelManager.SPAWN_HORIZONTAL_LEVEL_BOUNDS, EndlessLevelManager.SPAWN_HORIZONTAL_LEVEL_BOUNDS), spawnHeight, 0);
 			}
 
 			g.transform.SetParent(container);
 
 			Instance.ConfigureLevelItem(g);
+
+			// so overlapcircle will get newly created objects
+			Physics2D.SyncTransforms();
 
 			return g;
 		}

@@ -16,21 +16,24 @@ public class PowerupPickup : MonoBehaviour, ICollidable
 
 	[SerializeField] private TextMeshPro floatingTextPrefab;
 
+	[SerializeField] private bool randomPowerup = true;
+
 	public void Start()
 	{
-		powerup = PowerupManager.Instance.GetRandomPowerup();
+		if (randomPowerup) powerup = GetRandomPowerup();
 
 		sr = GetComponent<SpriteRenderer>();
 		powerupSr.sprite = powerup.sprite;
 		powerupSr.transform.localScale = Vector3.one * powerup.spriteScale;
-		powerupSr.transform.localPosition = powerup.spriteoffset;
+		powerupSr.transform.localPosition = powerup.spriteOffset;
+		powerupSr.transform.rotation = Quaternion.Euler(0, 0, powerup.spriteRotation);
 	}
 
 	public void OnCollide(Player player)
 	{
 		player.AddPowerup(powerup);
 
-		ParticleSystem p = ParticleManager.DestroyAfterDuration(ParticleManager.CreateParticleSystem("Powerup", transform.position, transform.parent));
+		ParticleSystem p = (ParticleManager.CreateParticleSystem("Powerup", transform.position, transform.parent, true));
 
 		ParticleSystem.MainModule main = p.main;
 		main.startColor = sr.color;
@@ -41,5 +44,18 @@ public class PowerupPickup : MonoBehaviour, ICollidable
 		AudioManager.PlaySoundGroup("PickupPowerup", 0.3f);
 
 		Destroy(gameObject);
+	}
+
+	private Powerup GetRandomPowerup()
+	{
+		Powerup p = PowerupManager.Instance.GetRandomPowerup();
+
+		// don't give player shield if they already have one
+		if (p is ShieldPowerup && GameHandler.Instance.player.health > 1f)
+		{
+			return GetRandomPowerup();
+		}
+
+		return p;
 	}
 }

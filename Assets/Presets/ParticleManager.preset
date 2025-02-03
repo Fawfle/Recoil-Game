@@ -26,7 +26,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: particleSystemList.Array.size
-    value: 7
+    value: 8
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: particleSystemList.Array.data[0].key
@@ -110,6 +110,18 @@ Preset:
     objectReference: {fileID: 5899282810695575837, guid: 7570adc183426bb49ba12c420012b5cb, type: 3}
   - target: {fileID: 0}
     propertyPath: particleSystemList.Array.data[6].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[7].key
+    value: Goal
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[7].particleSystem
+    value: 
+    objectReference: {fileID: 3644610991377878384, guid: 48d38cf425d0c53479ebd19ae67ddcff, type: 3}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[7].loop
     value: 0
     objectReference: {fileID: 0}
   m_ExcludedProperties: []

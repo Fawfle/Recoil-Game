@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &311453373334889227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 501977849302704672}
+  - component: {fileID: 5802369156696238177}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &501977849302704672
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311453373334889227}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5802369156696238177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311453373334889227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3e05a45da159a4d9b6b4a2a5ed49a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24300002, guid: d8b4ffda32a5cfb4ea71d91f49a2a32d, type: 2}
+  soundGroupList:
+  - name: Shoot
+    soundNames:
+    - Shoot1
+  - name: Die
+    soundNames:
+    - Die1
+  - name: Select
+    soundNames:
+    - Select1
+  - name: Explosion
+    soundNames:
+    - Explosion1
+    - Explosion2
+  - name: DestroyDamageObject
+    soundNames:
+    - DestroyDamageObject1
+    - DestroyDamageObject2
+  - name: PickupPowerup
+    soundNames:
+    - PickupPowerup1
+  - name: RefillAmmo
+    soundNames:
+    - RefillAmmo1
+    - RefillAmmo2
+  - name: GetAmmo
+    soundNames:
+    - GetAmmo1
+  - name: ShieldHit
+    soundNames:
+    - ShieldHit1
+  soundList:
+  - name: Select1
+    clip: {fileID: 8300000, guid: 6bb0854afaf68724c922e55bb66bb445, type: 3}
+  - name: Select2
+    clip: {fileID: 8300000, guid: 56560e480e51f654284cdfa62bf36db8, type: 3}
+  - name: RefillAmmo1
+    clip: {fileID: 8300000, guid: 19f0d1faf87b59e4397fae00573d0009, type: 3}
+  - name: RefillAmmo2
+    clip: {fileID: 8300000, guid: 7cd251eccf1e29e408a9c186183efa35, type: 3}
+  - name: Explosion1
+    clip: {fileID: 8300000, guid: b07ea14d173600f49b36ab48be9682ae, type: 3}
+  - name: Explosion2
+    clip: {fileID: 8300000, guid: 31b59ac92491e0847b58a0396ee4e936, type: 3}
+  - name: Die1
+    clip: {fileID: 8300000, guid: de686828264e6bc44958f1a87e0f4a6f, type: 3}
+  - name: DestroyDamageObject1
+    clip: {fileID: 8300000, guid: 0df237c1158a2764080c925c0f72282a, type: 3}
+  - name: DestroyDamageObject2
+    clip: {fileID: 8300000, guid: 0c431193697bfbf48b5193e3ee73a168, type: 3}
+  - name: PickupPowerup1
+    clip: {fileID: 8300000, guid: 5ae3698ae0d47d54a8450169cee916c2, type: 3}
+  - name: Shoot1
+    clip: {fileID: 8300000, guid: ddb48c1a62d491a4d847971bc91ae9a8, type: 3}
+  - name: GetAmmo1
+    clip: {fileID: 8300000, guid: 6a6f9c2442c33c846a5cb5570d26af4d, type: 3}
+  - name: ShieldHit1
+    clip: {fileID: 8300000, guid: c57ea0011bd363b48b971ebf5d140146, type: 3}
+  - name: Goal
+    clip: {fileID: 8300000, guid: 4c7e093bba3d0b747ac88ff5ee2cb0bd, type: 3}

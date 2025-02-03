@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IShootable
 {
+    public bool replenishAmmo { get; }
     public void OnShot();
 }

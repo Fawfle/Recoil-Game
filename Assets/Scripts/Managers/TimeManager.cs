@@ -28,7 +28,7 @@ public class TimeManager : MonoBehaviour
 
 	void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P) && (!GameHandler.Instance.IsState(GameState.OVER) || paused) && !TransitionManager.transitioning)
+        if (Input.GetKeyDown(KeyCode.P) && (!GameHandler.Instance.IsEndState() || paused) && !TransitionManager.transitioning)
 		{
             Pause(!paused);
 		}
