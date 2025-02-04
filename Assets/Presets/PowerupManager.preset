@@ -38,7 +38,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[0].type
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[0].sprite
@@ -70,7 +70,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[1].type
-    value: 1
+    value: 2
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[1].sprite
@@ -98,11 +98,11 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[2].duration
-    value: 4.5
+    value: 4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[2].type
-    value: 2
+    value: 3
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[2].sprite
@@ -134,7 +134,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[3].type
-    value: 3
+    value: 4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: powerupData.Array.data[3].sprite

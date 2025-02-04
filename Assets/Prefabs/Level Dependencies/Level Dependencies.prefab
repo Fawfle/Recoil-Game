@@ -193,24 +193,31 @@ MonoBehaviour:
   powerupData:
   - name: Recoil Up
     duration: 5
-    type: 0
+    type: 1
     sprite: {fileID: 21300000, guid: 18a7fbbe89e18b64aba9dfd569b80286, type: 3}
     spriteOffset: {x: 0, y: 0}
     spriteScale: 0.25
     spriteRotation: 0
   - name: Shield
     duration: 0
-    type: 1
+    type: 2
     sprite: {fileID: 21300000, guid: 8cdff340a49e2f440921e6fe4d4d894e, type: 3}
     spriteOffset: {x: 0, y: 0}
     spriteScale: 0.1
     spriteRotation: 0
   - name: Infinite Ammo
-    duration: 3
-    type: 2
+    duration: 4
+    type: 3
     sprite: {fileID: 21300000, guid: 5ea1ad93d44f73f4d9e63b8b09cf1931, type: 3}
     spriteOffset: {x: 0, y: 0}
     spriteScale: 0.8
+    spriteRotation: 0
+  - name: Shotgun
+    duration: 0
+    type: 4
+    sprite: {fileID: 21300000, guid: 8b6d5a22f49ecd343b9e59c335c99ee1, type: 3}
+    spriteOffset: {x: 0, y: 0}
+    spriteScale: 0.15
     spriteRotation: 0
 --- !u!114 &2636841499755518218
 MonoBehaviour:

@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
 
 
 	private static readonly float ENDLESS_KILL_DISTANCE = 6f; // distance to kill player below top line (0.5f below viewport of 5.5f)
-	private static readonly float LEVEL_KILL_DISTANCE_SIZE = 0.5f; // distance to kill player outside of level bounds (0.5f outside bounds)
+	private static readonly float LEVEL_KILL_DISTANCE_SIZE = 1f; // distance to kill player outside of level bounds (0.5f outside bounds)
 
 	private static readonly float LEVEL_WON_LERP_SPEED = 1f;
 
@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
 	//private List<SpriteRenderer> bulletUIList = new();
 
 	private static readonly float SHIELD_SAVE_VELOCITY = 7f;
+	private static readonly float SHOTGUN_BULLET_ANGLE_OFFSET = 25f;
 
 	private static readonly bool ENDLESS_BULLET_WRAP = true;
 
@@ -234,14 +235,20 @@ public class Player : MonoBehaviour
 
 		SaveManager.IncrementShotsFired();
 
-		CreateBullet();
+		CreateBullet(gunAnchor.localRotation);
+
+		if (HasPowerup(typeof(ShotgunPowerup)))
+		{
+			CreateBullet(gunAnchor.localRotation * Quaternion.Euler(0, 0, SHOTGUN_BULLET_ANGLE_OFFSET));
+			CreateBullet(gunAnchor.localRotation * Quaternion.Euler(0, 0, -SHOTGUN_BULLET_ANGLE_OFFSET));
+		}
 
 		OnShoot?.Invoke();
 	}
 
-	void CreateBullet()
+	void CreateBullet(Quaternion rotation)
 	{
-		Bullet bullet = Instantiate(bulletPrefab, gun.transform.position, gunAnchor.localRotation);
+		Bullet bullet = Instantiate(bulletPrefab, gun.transform.position, rotation);
 		bullet.transform.SetParent(bulletContainer);
 		bullet.GetComponent<Rigidbody2D>().velocity = bullet.transform.right * bulletSpeed;
 		Destroy(bullet, bulletLifetime);
@@ -330,6 +337,16 @@ public class Player : MonoBehaviour
 	{
 		powerup.End();
 		powerups.Remove(powerup);
+	}
+
+	public bool HasPowerup(Type powerupType)
+	{
+		foreach (Powerup p in powerups)
+		{
+			if (p.GetType() == powerupType) return true;
+		}
+
+		return false;
 	}
 
 	public void AddShield()

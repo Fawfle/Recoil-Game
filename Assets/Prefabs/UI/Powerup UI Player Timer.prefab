@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5803922, g: 1, b: 0.5764706, a: 0.78431374}
+  m_Color: {r: 0.61960787, g: 0.6784314, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -92,8 +92,9 @@ MonoBehaviour:
   progressType: 1
   progressImage: {fileID: 1712529604061499139}
   icon: {fileID: 2067982727387012562}
+  timed: 1
   durationSeconds: 1
-  timer: 0
+  progress: 0
 --- !u!1 &8967055053608669017
 GameObject:
   m_ObjectHideFlags: 0

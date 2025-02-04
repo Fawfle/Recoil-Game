@@ -101,6 +101,8 @@ namespace Powerups
 	{
 		private float previousRecoil;
 
+		public static readonly float RECOIL_MULTIPLIER = 1.5f;
+
 		public RecoilPowerup()
 		{
 			timed = true;
@@ -109,7 +111,7 @@ namespace Powerups
 		public override void OnStart()
 		{
 			previousRecoil = GameHandler.Instance.player.recoilForce;
-			GameHandler.Instance.player.recoilForce = previousRecoil * 2;
+			GameHandler.Instance.player.recoilForce = previousRecoil * RECOIL_MULTIPLIER;
 		}
 
 		public override void OnEnd()
@@ -165,6 +167,8 @@ namespace Powerups
 		private int maxShots = 3;
 		private int shotsLeft = 3;
 
+		public static readonly float RECOIL_MULTIPLIER = 2f;
+
 		public ShotgunPowerup()
 		{
 			timed = false;
@@ -173,7 +177,7 @@ namespace Powerups
 		public override void OnStart()
 		{
 			previousRecoil = GameHandler.Instance.player.recoilForce;
-			GameHandler.Instance.player.recoilForce = previousRecoil * 2;
+			GameHandler.Instance.player.recoilForce = previousRecoil * RECOIL_MULTIPLIER;
 
 			GameHandler.Instance.player.OnShoot += OnPlayerShoot;
 		}

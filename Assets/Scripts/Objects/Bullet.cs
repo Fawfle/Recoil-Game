@@ -59,7 +59,7 @@ public class Bullet : MonoBehaviour
 		}
 
 		// destroy on vertical bounds
-		if (transform.position.y < -levelBounds + Camera.main.transform.position.y || transform.position.y > levelBounds + 2f + Camera.main.transform.position.y) Destroy(gameObject);
+		if (transform.position.y < -levelBounds - EndlessLevelManager.DESTROY_DISTANCE + Camera.main.transform.position.y || transform.position.y > levelBounds + 2f + Camera.main.transform.position.y) Destroy(gameObject);
 	}
 
 	private void LevelFixedUpdate()

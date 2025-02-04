@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 3
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.5805044, g: 1, b: 0.575, a: 1}
+  m_Color: {r: 0.6179246, g: 0.6779015, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   particles: {fileID: 4117700118265250388, guid: 5770051d088d789449c30b66823006f0, type: 3}
   powerupSr: {fileID: 3600040846513069686}
   floatingTextPrefab: {fileID: 5203517058678074033, guid: 49ebe6be6b2a643419d2af5324e8c085, type: 3}
+  randomPowerup: 1
 --- !u!1 &6851121675172528089
 GameObject:
   m_ObjectHideFlags: 0

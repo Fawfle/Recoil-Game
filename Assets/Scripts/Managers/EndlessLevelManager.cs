@@ -40,6 +40,8 @@ public class EndlessLevelManager : MonoBehaviour
 	// bounds of level/camera
 	public static readonly float LEVEL_BOUNDS = 5.5f;
 
+	public static readonly float DESTROY_DISTANCE = 8f;
+
 	private void Awake()
 	{
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -67,7 +69,7 @@ public class EndlessLevelManager : MonoBehaviour
 		{
 			foreach (Transform child in item.container)
 			{
-				if (child.position.y < GameHandler.Instance.maxPlayerHeight - LevelObjectData.DESTROY_DISTANCE) Destroy(child.gameObject);
+				if (child.position.y < GameHandler.Instance.maxPlayerHeight - DESTROY_DISTANCE) Destroy(child.gameObject);
 			}
 
 			SpawnItemsUntilFull(item);
@@ -138,7 +140,6 @@ public class EndlessLevelManager : MonoBehaviour
 		[Tooltip("Height to begin spawning")]
 		public float spawnHeight = 0;
 
-		public static readonly float DESTROY_DISTANCE = 9f;
 		public float maxCount = 8f;
 
 		[Tooltip("Distance from other objects required to spawn")]
@@ -177,7 +178,7 @@ public class EndlessLevelManager : MonoBehaviour
 				{
 					if (i == 99) Debug.Log("Endless level manager item failed to get minimumSpawnDistance position");
 
-					Vector3 testPosition = new Vector3(Random.Range(-EndlessLevelManager.SPAWN_HORIZONTAL_LEVEL_BOUNDS, EndlessLevelManager.SPAWN_HORIZONTAL_LEVEL_BOUNDS), spawnHeight, 0);
+					Vector3 testPosition = new Vector3(Random.Range(-SPAWN_HORIZONTAL_LEVEL_BOUNDS, SPAWN_HORIZONTAL_LEVEL_BOUNDS), spawnHeight, 0);
 
 					Collider2D[] collisions = Physics2D.OverlapCircleAll(testPosition, minimumSpawnDistance);
 					if (collisions.Length > 0) continue;
@@ -188,7 +189,7 @@ public class EndlessLevelManager : MonoBehaviour
 			}
 			else
 			{
-				g.transform.position = new Vector3(Random.Range(-EndlessLevelManager.SPAWN_HORIZONTAL_LEVEL_BOUNDS, EndlessLevelManager.SPAWN_HORIZONTAL_LEVEL_BOUNDS), spawnHeight, 0);
+				g.transform.position = new Vector3(Random.Range(-SPAWN_HORIZONTAL_LEVEL_BOUNDS, SPAWN_HORIZONTAL_LEVEL_BOUNDS), spawnHeight, 0);
 			}
 
 			g.transform.SetParent(container);

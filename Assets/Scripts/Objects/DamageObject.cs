@@ -28,6 +28,7 @@ public class DamageObject : MonoBehaviour, IShootable, ICollidable
 		ParticleSystem.ShapeModule shape = p.shape;
 		shape.sprite = sr.sprite;
 		shape.texture = sr.sprite.texture; // will sample texture to decide what colors to set particles to (on top of startColor)
+		shape.scale *= sr.size; // account for scaling
 
 		if (!DOTween.IsTweening(Camera.main)) Camera.main.DOShakePosition(0.5f, 0.5f, 12, fadeOut: true);
 

@@ -13,6 +13,13 @@ public class PowerupManager : MonoBehaviour
 	[SerializeField] private List<PowerupData> powerupData = new();
 	public List<Powerup> powerups;
 
+	private static readonly Dictionary<PowerupType, Powerup> POWERUP_TYPES = new() {
+		{ PowerupType.Recoil, new RecoilPowerup() },
+		{ PowerupType.Shield, new ShieldPowerup() },
+		{ PowerupType.InfiniteAmmo, new InfiniteAmmoPowerup() },
+		{ PowerupType.Shotgun, new ShotgunPowerup() },
+	};
+
 	private void Awake()
 	{
 		if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -21,22 +28,8 @@ public class PowerupManager : MonoBehaviour
 		powerups = new();
 		foreach (PowerupData pData in powerupData)
 		{
-			Powerup p = null;
-			switch (pData.type)
-			{
-				case PowerupType.Recoil:
-					p = new RecoilPowerup();
-					break;
-				case PowerupType.Shield:
-					p = new ShieldPowerup();
-					break;
-				case PowerupType.InfiniteAmmo:
-					p = new InfiniteAmmoPowerup();
-					break;
-				case PowerupType.Shotgun:
-					p = new ShotgunPowerup();
-					break;
-			}
+			Powerup p = POWERUP_TYPES[pData.type].CloneViaFakeSerialization();
+
 			p.name = pData.name;
 			p.durationSeconds = pData.duration;
 			p.sprite = pData.sprite;
@@ -53,6 +46,16 @@ public class PowerupManager : MonoBehaviour
 		return powerups[Random.Range(0, powerups.Count)].CloneViaFakeSerialization<Powerup>();
 	}
 
+	public Powerup GetPowerupOfType(PowerupType type)
+	{
+		foreach (var p in powerups)
+		{
+			if (p.GetType() == POWERUP_TYPES[type].GetType()) return p.CloneViaSerialization<Powerup>();
+		}
+
+		return null;
+	}
+
 	[System.Serializable]
 	private class PowerupData
 	{
@@ -66,8 +69,9 @@ public class PowerupManager : MonoBehaviour
 	}
 
 
-	enum PowerupType
+	public enum PowerupType
 	{
+		None, // for non random powerups
 		Recoil,
 		Shield,
 		InfiniteAmmo,
