@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
 
 	private static readonly bool ENDLESS_BULLET_WRAP = true;
 
-	public Action OnShoot;
+	public event Action OnShoot;
 
 	private void Awake()
 	{
@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
 		if (GameHandler.Instance.IsGameMode(GameMode.Endless)) EndlessFixedUpdate();
 		else if (GameHandler.Instance.IsGameMode(GameMode.Level)) LevelFixedUpdate();
 
-		if (GameHandler.Instance.IsEndState()) return;
+		if (!GameHandler.Instance.IsState(GameState.Play)) return;
 
 		if (ControlManager.WasShootPressedThisFrame() && (!ammoEnabled || ammo > 0))
 		{
@@ -185,7 +185,8 @@ public class Player : MonoBehaviour
 				rb.velocity *= 0.99f;
 			}
 			return;
-		} else if (GameHandler.Instance.IsState(GameState.LevelComplete))
+		} 
+		else if (GameHandler.Instance.IsState(GameState.LevelComplete))
 		{
 			rb.gravityScale = 0f;
 
@@ -218,7 +219,6 @@ public class Player : MonoBehaviour
 
 	void ShootBullet()
 	{
-		//print("shoot");
 		Vector2 direction = (((Vector2)transform.position) - (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)).normalized;
 		rb.velocity = direction * recoilForce + rb.velocity * velocityConservationCoefficient;
 

@@ -14,7 +14,7 @@ public class GameHandler : MonoBehaviour
 
     [SerializeField] private GameState state;
 
-    public Action OnGameInit, OnGamePlay, OnGameEnd, OnGameOver, onLevelComplete;
+    public event Action OnGameInit, OnGamePlay, OnGameEnd, OnGameOver, onLevelComplete;
 
 	[SerializeField] private GameMode mode;
 
@@ -100,7 +100,7 @@ public class GameHandler : MonoBehaviour
 
 	private void InitFixedUpdate()
 	{
-		if (ControlManager.WasShootPressedThisFrame())
+		if (ControlManager.WasShootPressedThisFrame() && !CameraManager.Instance.isPanning)
 		{
 			SetState(GameState.Play);
 		}

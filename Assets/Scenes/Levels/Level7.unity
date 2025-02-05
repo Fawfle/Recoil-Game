@@ -745,7 +745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2121644628019752778, guid: 245862d621bf8b34f8c12f99079b695a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 366.4
+      value: 377.6
       objectReference: {fileID: 0}
     - target: {fileID: 2971984160715308245, guid: 245862d621bf8b34f8c12f99079b695a, type: 3}
       propertyPath: m_Name
@@ -753,7 +753,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3191563425667779898, guid: 245862d621bf8b34f8c12f99079b695a, type: 3}
       propertyPath: m_text
-      value: 7. Explosives A
+      value: '#. Explosives A'
       objectReference: {fileID: 0}
     - target: {fileID: 5726257559154146164, guid: 245862d621bf8b34f8c12f99079b695a, type: 3}
       propertyPath: target

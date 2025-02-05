@@ -158,6 +158,91 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1801666023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &710800204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 710800206}
+  - component: {fileID: 710800205}
+  m_Layer: 0
+  m_Name: Camera Path
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &710800205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710800204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e5ac92bc18f545cc84cd886ece82b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editorData:
+    _bezierPath:
+      points:
+      - {x: 4, y: 0, z: 0}
+      - {x: 3, y: 0, z: 0}
+      - {x: 1, y: 0, z: 0}
+      - {x: 0, y: 0, z: 0}
+      isClosed: 0
+      space: 1
+      controlMode: 3
+      autoControlLength: 0.3
+      boundsUpToDate: 0
+      bounds:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 2, y: 0.14433756, z: 0}
+      perAnchorNormalsAngle:
+      - 0
+      - 0
+      globalNormalsAngle: 0
+      flipNormals: 0
+    vertexPathUpToDate: 0
+    vertexPathMaxAngleError: 0.3
+    vertexPathMinVertexSpacing: 0.01
+    showTransformTool: 0
+    showPathBounds: 0
+    showPerSegmentBounds: 0
+    displayAnchorPoints: 1
+    displayControlPoints: 1
+    bezierHandleScale: 3.21
+    globalDisplaySettingsFoldout: 0
+    keepConstantHandleSize: 0
+    showNormalsInVertexMode: 0
+    showBezierPathInVertexMode: 0
+    showDisplayOptions: 1
+    showPathOptions: 1
+    showVertexPathDisplayOptions: 0
+    showVertexPathOptions: 1
+    showNormals: 0
+    showNormalsHelpInfo: 0
+    tabIndex: 0
+  initialized: 1
+--- !u!4 &710800206
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710800204}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &990207969 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2855508452326528735, guid: 1e5eb6a1e7d38194ebf77ca297b4cfe4, type: 3}
@@ -490,7 +575,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1955633922}
     - target: {fileID: 1855645915143331588, guid: 1e5eb6a1e7d38194ebf77ca297b4cfe4, type: 3}
+      propertyPath: panPath
+      value: 
+      objectReference: {fileID: 710800205}
+    - target: {fileID: 1855645915143331588, guid: 1e5eb6a1e7d38194ebf77ca297b4cfe4, type: 3}
       propertyPath: panPositionTransform
+      value: 
+      objectReference: {fileID: 1273132809}
+    - target: {fileID: 1855645915143331588, guid: 1e5eb6a1e7d38194ebf77ca297b4cfe4, type: 3}
+      propertyPath: panPositionStartTarget
       value: 
       objectReference: {fileID: 1273132809}
     - target: {fileID: 2855508452326528735, guid: 1e5eb6a1e7d38194ebf77ca297b4cfe4, type: 3}
@@ -693,6 +786,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 5199233017160480395}
+  - {fileID: 710800206}
   - {fileID: 1955633921}
   - {fileID: 6582022817752358928}
   - {fileID: 1801666023}

@@ -10,9 +10,13 @@ public class Explosive : MonoBehaviour, IShootable
 
 	public bool replenishAmmo => true;
 
+	// to stop getting shot multiple times in the same frame
+	bool shot = false;
+
 	public void OnShot()
 	{
-		if (GameHandler.Instance.player == null) return;
+		if (GameHandler.Instance.player == null || shot) return;
+		shot = true;
 
 		float distance = Vector2.Distance(transform.position, GameHandler.Instance.player.transform.position);
 		if (distance < range)

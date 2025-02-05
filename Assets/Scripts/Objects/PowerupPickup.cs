@@ -16,13 +16,13 @@ public class PowerupPickup : MonoBehaviour, ICollidable
 
 	[SerializeField] private TextMeshPro floatingTextPrefab;
 
-	[SerializeField] private bool randomPowerup = true;
-	[Tooltip("if no random powerup, use this one instead")]
+	//[SerializeField] private bool randomPowerup = true;
+	//[Tooltip("if no random powerup, use this one instead")]
 	[SerializeField] private PowerupManager.PowerupType powerupType;
 
 	public void Start()
 	{
-		if (randomPowerup) powerup = GetRandomPowerup();
+		if (powerupType == PowerupManager.PowerupType.Random) powerup = GetRandomPowerup();
 		else powerup = PowerupManager.Instance.GetPowerupOfType(powerupType);
 
 		sr = GetComponent<SpriteRenderer>();

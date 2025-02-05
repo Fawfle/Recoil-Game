@@ -31,6 +31,9 @@ public class LevelMenuManager : MonoBehaviour
 		if (nextLevel != null) nextLevelButton.onClick.AddListener(() => { TransitionManager.Instance.LoadScene(nextLevel); });
 		else nextLevelButton.interactable = false;
 
+		//print(LevelsManager.GetCurrentLevelIndex());
+		levelText.text = levelText.text.Replace("#", (LevelsManager.GetCurrentLevelIndex() + 1).ToString());
+
 		SetMenuActive(Menu.None);
 
 		StartCoroutine(IntroRoutine());

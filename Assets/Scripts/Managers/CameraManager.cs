@@ -3,35 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
-using static UnityEngine.GraphicsBuffer;
-using System.Runtime;
-using System.Runtime.CompilerServices;
+using PathCreation;
 
 public class CameraManager : MonoBehaviour
 {
+    public static CameraManager Instance { get; private set; }
 
     [Header("Endless/Levels")]
     [SerializeField] private Transform target;
     [SerializeField] public float lookAhead = 2f;
 
     [Header("Levels")]
-    [Tooltip("Whether or not to pan on intro")] // TODO: make this save on reset
+    [Tooltip("Whether or not to pan on intro")]
     [SerializeField] private bool introPanEnabled = false;
+    public PathCreator panPath;
     [Tooltip("If not null, will treat tranform's position as start position")]
-    [SerializeField] private Transform panPositionTransform = null;
-    [Tooltip("Position to start camera (for showing goal), it will lerp to target position")]
-    [SerializeField] private Vector2 panPosition = Vector2.zero;
+    [SerializeField] private Transform panPositionStartTarget = null;
     [Tooltip("Speed to lerp to lookahead during Levels")]
     [SerializeField] private float lookAheadSpeed = 1f;
 
     private Vector2 lookAheadOffset = Vector2.zero;
 
     private float introPanLingerDurationSeconds = 0.5f;
-    private float introPanDurationSeconds = 2f;
+    private float introPanSpeed = 7.5f;
 
-    private bool isPanning = false;
+    public bool isPanning { get; private set; } = false;
 
-    private void Start()
+	private void Awake()
+	{
+		if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+	}
+
+	private void Start()
     {
 		if (!CanIntroPan())
         {
@@ -39,10 +43,18 @@ public class CameraManager : MonoBehaviour
             return;
         }
 
-        if (panPositionTransform != null) panPosition = panPositionTransform.position;
+        if (panPath == null) return;
 
-        panPosition = ClampInLevelBounds(panPosition);
-		UpdateCameraPosition(panPosition);
+        // loop through anchor points (every 3) and clamp them in level bounds
+		for (int i = 0; i < panPath.bezierPath.NumAnchorPoints; i++)
+		{
+            int index = i * 3;
+			panPath.bezierPath.SetPoint(index, ClampInLevelBounds(panPath.bezierPath.GetPoint(index)));
+		}
+
+        panPath.bezierPath.AutoSetAllControlPoints();
+
+		UpdateCameraPosition(ClampInLevelBounds(panPath.path.GetPointAtDistance(0, EndOfPathInstruction.Stop)));
 
         StartCoroutine(CameraPanRoutine());
 	}
@@ -53,25 +65,23 @@ public class CameraManager : MonoBehaviour
 
         yield return new WaitForSeconds(introPanLingerDurationSeconds);
 
-        float t = 0;
+        float distanceTraveled = 0f;
 
-        while (t < 1f)
+        while (panPath.path.length - distanceTraveled > 0.05f)
         {
-            t += Time.deltaTime / introPanDurationSeconds;
+            distanceTraveled += introPanSpeed * Time.deltaTime;
+			Vector2 nextPosition = panPath.path.GetPointAtDistance(distanceTraveled);
 
 			UpdateLookAheadOffset();
+			nextPosition += lookAheadOffset;
 
-			Vector3 lerpTarget = ClampInLevelBounds(target.position + (Vector3)lookAheadOffset);
-
-            Vector2 lerpedPosition = Vector2.Lerp(panPosition, lerpTarget, t);
-
-			UpdateCameraPosition(ClampInLevelBounds(lerpedPosition));
+			UpdateCameraPosition(ClampInLevelBounds(nextPosition));
             yield return null;
         }
 
-        UpdateCameraPosition(ClampInLevelBounds(target.position + (Vector3)lookAheadOffset));
+        UpdateCameraPosition(ClampInLevelBounds(panPath.path.GetPointAtTime(1f, EndOfPathInstruction.Stop) + (Vector3)lookAheadOffset));
 
-        isPanning = false;
+		isPanning = false;
     }
 
 	void Update()
@@ -91,7 +101,7 @@ public class CameraManager : MonoBehaviour
 
             UpdateLookAheadOffset();
 
-			Vector3 newPosition = target.position + (Vector3)lookAheadOffset;
+			Vector2 newPosition = ClampInLevelBounds(target.position) + lookAheadOffset;
 
             UpdateCameraPosition(ClampInLevelBounds(newPosition));
         }
@@ -115,14 +125,25 @@ public class CameraManager : MonoBehaviour
         return LevelManager.Instance.ClampInBounds(p, 2 * Camera.main.orthographicSize * Vector2.one);
 	}
 
-	private float Smoothing(float t)
-    {
-        return Mathf.Sign(t) * Mathf.Pow((Mathf.Abs(t) - 1), 3) + 1;
-    }
-
     private bool CanIntroPan()
     {
         return GameHandler.Instance.IsGameMode(GameMode.Level) && introPanEnabled && !TransitionManager.sceneReloaded;
 
 	}
+
+#if UNITY_EDITOR
+    // update start and end for cam path
+    private void OnDrawGizmos()
+	{
+        if (Application.isPlaying || !introPanEnabled) return;
+
+        if (panPath == null) return;
+
+		if (panPositionStartTarget != null) panPath.bezierPath.SetPoint(0, panPositionStartTarget.position);
+
+        if (target != null) panPath.bezierPath.SetPoint(panPath.bezierPath.NumPoints - 1, target.position);
+
+        if (panPositionStartTarget != null || target != null) panPath.bezierPath.AutoSetAllControlPoints();
+	}
+#endif
 }

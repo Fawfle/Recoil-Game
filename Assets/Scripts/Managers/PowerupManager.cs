@@ -71,7 +71,7 @@ public class PowerupManager : MonoBehaviour
 
 	public enum PowerupType
 	{
-		None, // for non random powerups
+		Random, // for non random powerups
 		Recoil,
 		Shield,
 		InfiniteAmmo,

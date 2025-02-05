@@ -41,7 +41,9 @@ public class PlayerUIManager : MonoBehaviour
 			bulletImages[i].color = ((bulletImages.Count - 1 - i) < GameHandler.Instance.player.ammo) ? Color.yellow : new Color(0.1f, 0.1f, 0.1f);
 		}
 
-		powerupUITimerContainer.transform.position = GameHandler.Instance.player.transform.position;
+		Vector3 followPosition = GameHandler.Instance.player.transform.position;
+		followPosition.z = powerupUITimerContainer.transform.position.z;
+		powerupUITimerContainer.transform.position = followPosition;
 	}
 
 	private void DestroyPowerupTimerUI()

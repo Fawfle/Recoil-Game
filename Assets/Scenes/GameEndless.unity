@@ -554,8 +554,8 @@ MonoBehaviour:
   target: {fileID: 1818974377}
   lookAhead: 1
   introPanEnabled: 0
-  panPositionTransform: {fileID: 0}
-  panPosition: {x: 0, y: 0}
+  panPath: {fileID: 0}
+  panPositionStartTarget: {fileID: 0}
   lookAheadSpeed: 1
 --- !u!1 &112461768
 GameObject:
