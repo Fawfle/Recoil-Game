@@ -5,6 +5,7 @@ using System;
 using DG.Tweening;
 using Powerups;
 using Unity.VisualScripting;
+using System.Runtime.ConstrainedExecution;
 
 public class Player : MonoBehaviour
 {
@@ -18,13 +19,13 @@ public class Player : MonoBehaviour
 	[SerializeField] private Transform bulletContainer;
 
 	[SerializeField] private SpriteRenderer shieldSprite;
+	[SerializeField] public Transform powerupTimerContainer;
 
 	[Header("Paramaters")]
 	[SerializeField] public int health = 1;
 	[SerializeField] public float recoilForce = 5;
 	[Tooltip("Coefficient of velocity to conserve when shooting")]
 	[SerializeField] private float velocityConservationCoefficient = 0.25f;
-
 
 	private static readonly float ENDLESS_KILL_DISTANCE = 6f; // distance to kill player below top line (0.5f below viewport of 5.5f)
 	private static readonly float LEVEL_KILL_DISTANCE_SIZE = 1f; // distance to kill player outside of level bounds (0.5f outside bounds)
@@ -142,6 +143,11 @@ public class Player : MonoBehaviour
 		if (ControlManager.WasShootPressedThisFrame() && (!ammoEnabled || ammo > 0))
 		{
 			ShootBullet();
+		}
+
+		if (ControlManager.Controls.game.restart.WasPressedThisFrame())
+		{
+			Die();
 		}
 	}
 

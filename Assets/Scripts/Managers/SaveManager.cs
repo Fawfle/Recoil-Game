@@ -101,6 +101,13 @@ public static class SaveManager
 		if (write) WriteSaveToSave();
 	}
 
+	public static void SetSaveLevelIntroPan(bool isOn, bool write = true)
+	{
+		save.levelIntroPanEnabled = isOn;
+
+		if (write) WriteSaveToSave();
+	}
+
 	public static bool WriteSaveToSave()
 	{
 		return WriteToSave(save);

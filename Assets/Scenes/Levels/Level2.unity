@@ -471,6 +471,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 669a3ab930c12704dafff01ad5d9bc86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1955633924 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5711289568758132571, guid: d2161dc0eaff97f44851473c453c5ce0, type: 3}
+  m_PrefabInstance: {fileID: 1955633921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3911988056577369139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -690,6 +695,10 @@ PrefabInstance:
       propertyPath: m_text
       value: '#. Climb'
       objectReference: {fileID: 0}
+    - target: {fileID: 3419543249542371694, guid: 245862d621bf8b34f8c12f99079b695a, type: 3}
+      propertyPath: powerupUITimerContainer
+      value: 
+      objectReference: {fileID: 1955633924}
     - target: {fileID: 5726257559154146164, guid: 245862d621bf8b34f8c12f99079b695a, type: 3}
       propertyPath: target
       value: 

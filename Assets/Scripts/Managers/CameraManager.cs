@@ -79,7 +79,10 @@ public class CameraManager : MonoBehaviour
             yield return null;
         }
 
-        UpdateCameraPosition(ClampInLevelBounds(panPath.path.GetPointAtTime(1f, EndOfPathInstruction.Stop) + (Vector3)lookAheadOffset));
+		print(panPath.path.GetPointAtDistance(100f, EndOfPathInstruction.Stop));
+
+
+		//UpdateCameraPosition(ClampInLevelBounds(panPath.path.GetPointAtTime(1f, EndOfPathInstruction.Stop) + (Vector3)lookAheadOffset));
 
 		isPanning = false;
     }
@@ -127,7 +130,7 @@ public class CameraManager : MonoBehaviour
 
     private bool CanIntroPan()
     {
-        return GameHandler.Instance.IsGameMode(GameMode.Level) && introPanEnabled && !TransitionManager.sceneReloaded;
+        return GameHandler.Instance.IsGameMode(GameMode.Level) && introPanEnabled && !TransitionManager.sceneReloaded && SaveManager.save.levelIntroPanEnabled;
 
 	}
 

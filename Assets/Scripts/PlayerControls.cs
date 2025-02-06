@@ -53,6 +53,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""86ca45b1-c1f7-4694-9e22-4a5af48c88ef"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""shootAlt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""73e0a41a-6ee6-4d33-ad02-54aa1fdc0abf"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_game_axis = m_game.FindAction("axis", throwIfNotFound: true);
         m_game_shoot = m_game.FindAction("shoot", throwIfNotFound: true);
         m_game_shootAlt = m_game.FindAction("shootAlt", throwIfNotFound: true);
+        m_game_restart = m_game.FindAction("restart", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -212,6 +233,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_game_axis;
     private readonly InputAction m_game_shoot;
     private readonly InputAction m_game_shootAlt;
+    private readonly InputAction m_game_restart;
     public struct GameActions
     {
         private @PlayerControls m_Wrapper;
@@ -219,6 +241,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @axis => m_Wrapper.m_game_axis;
         public InputAction @shoot => m_Wrapper.m_game_shoot;
         public InputAction @shootAlt => m_Wrapper.m_game_shootAlt;
+        public InputAction @restart => m_Wrapper.m_game_restart;
         public InputActionMap Get() { return m_Wrapper.m_game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -237,6 +260,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @shootAlt.started += instance.OnShootAlt;
             @shootAlt.performed += instance.OnShootAlt;
             @shootAlt.canceled += instance.OnShootAlt;
+            @restart.started += instance.OnRestart;
+            @restart.performed += instance.OnRestart;
+            @restart.canceled += instance.OnRestart;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -250,6 +276,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @shootAlt.started -= instance.OnShootAlt;
             @shootAlt.performed -= instance.OnShootAlt;
             @shootAlt.canceled -= instance.OnShootAlt;
+            @restart.started -= instance.OnRestart;
+            @restart.performed -= instance.OnRestart;
+            @restart.canceled -= instance.OnRestart;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -272,5 +301,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnAxis(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnShootAlt(InputAction.CallbackContext context);
+        void OnRestart(InputAction.CallbackContext context);
     }
 }

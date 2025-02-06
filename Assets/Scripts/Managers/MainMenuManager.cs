@@ -22,12 +22,14 @@ public class MainMenuManager : MonoBehaviour
     [Header("Levels")]
     [SerializeField] private LevelSelectUI levelSelectUIPrefab;
 	[SerializeField] private Transform levelSelectUIContainer;
+    [SerializeField] private Button pageForwardButton, pageBackwardButton;
+    private int currentLevelPageIndex = 0;
 
-    private static readonly int PAGE_LEVELS = 24;
+    private static readonly int PAGE_LEVEL_SIZE = 24;
 
 	[Header("Options")]
     [SerializeField] private Slider volumeSlider;
-    [SerializeField] private Toggle clickToShootToggle;
+    [SerializeField] private Toggle clickToShootToggle, levelIntroPanToggle;
 
 	private void Awake()
 	{
@@ -39,8 +41,14 @@ public class MainMenuManager : MonoBehaviour
 
         leaderboardButton.onClick.AddListener(() => SetMenuActive(MenuType.Leaderboard));
 
+        // levels
+        pageForwardButton.onClick.AddListener(() => LoadLevelPage(currentLevelPageIndex + 1));
+        pageBackwardButton.onClick.AddListener(() => LoadLevelPage(currentLevelPageIndex - 1));
+
+        // options
         volumeSlider.onValueChanged.AddListener(OnVolumeSliderUpdate);
         clickToShootToggle.onValueChanged.AddListener(OnClickToShootToggleUpdate);
+        levelIntroPanToggle.onValueChanged.AddListener(OnLevelIntroPanToggleUpdate);
 
         foreach (var b in backButtons)
         {
@@ -52,28 +60,35 @@ public class MainMenuManager : MonoBehaviour
 	{
         SetMenuActive(MenuType.Start);
 
-        LoadLevelPage();
+        LoadLevelPage(0);
 
         // audio manager sets self volume
         volumeSlider.SetValueWithoutNotify(SaveManager.save.volume);
 		clickToShootToggle.SetIsOnWithoutNotify(SaveManager.save.clickToShootEnabled);
+        levelIntroPanToggle.SetIsOnWithoutNotify(SaveManager.save.levelIntroPanEnabled);
 	}
 
 	#region Levels
 
-    private void LoadLevelPage()
+    private void LoadLevelPage(int pageIndex)
     {
         ClearLevelPage();
 
-        for (int i = 0; i < PAGE_LEVELS; i++)
+        int startIndex = pageIndex * PAGE_LEVEL_SIZE;
+        currentLevelPageIndex = pageIndex;
+
+        for (int levelIndex = startIndex; levelIndex < startIndex + PAGE_LEVEL_SIZE; levelIndex++)
         {
-            int levelIndex = i;
             if (levelIndex >= LevelsManager.Levels.Count) break;
 
             var ui = Instantiate(levelSelectUIPrefab, levelSelectUIContainer);
 
             ui.UpdateLevel(levelIndex);
         }
+
+        // update page buttons
+        pageBackwardButton.interactable = pageIndex != 0;
+        pageForwardButton.interactable = LevelsManager.Levels.Count >= (pageIndex + 1) * PAGE_LEVEL_SIZE;
     }
 
     private void ClearLevelPage()
@@ -98,6 +113,11 @@ public class MainMenuManager : MonoBehaviour
     private void OnClickToShootToggleUpdate(bool isOn)
     {
         SaveManager.SetSaveClickToShoot(isOn);
+    }
+
+    private void OnLevelIntroPanToggleUpdate(bool isOn)
+    {
+        SaveManager.SetSaveLevelIntroPan(isOn);
     }
 
     #endregion

@@ -406,6 +406,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8064222876571123298, guid: d9b592b3330a19047b5af6aebaaf8285, type: 3}
   m_PrefabInstance: {fileID: 544156994}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &650258397 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5711289568758132571, guid: d2161dc0eaff97f44851473c453c5ce0, type: 3}
+  m_PrefabInstance: {fileID: 1955633921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &906966188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -646,7 +651,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 0
@@ -1447,6 +1452,10 @@ PrefabInstance:
       propertyPath: m_text
       value: '#. Minefield'
       objectReference: {fileID: 0}
+    - target: {fileID: 3419543249542371694, guid: 245862d621bf8b34f8c12f99079b695a, type: 3}
+      propertyPath: powerupUITimerContainer
+      value: 
+      objectReference: {fileID: 650258397}
     - target: {fileID: 5726257559154146164, guid: 245862d621bf8b34f8c12f99079b695a, type: 3}
       propertyPath: target
       value: 
@@ -1496,7 +1505,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 99893280}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2421483263292871617, guid: 245862d621bf8b34f8c12f99079b695a, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 245862d621bf8b34f8c12f99079b695a, type: 3}

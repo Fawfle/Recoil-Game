@@ -71,12 +71,19 @@ public class Bullet : MonoBehaviour
 	{
 		MonoBehaviour[] scripts = g.GetComponents<MonoBehaviour>();
 
+		// don't do extra behavior for objects already hit
+		List<GameObject> hitObjects = new();
+
 		foreach (MonoBehaviour script in scripts)
 		{
 			if (script is IShootable)
 			{
 				IShootable shootable = (script as IShootable);
 				shootable.OnShot();
+
+				if (hitObjects.Contains(script.gameObject)) continue;
+				hitObjects.Add(script.gameObject);
+
 				if (GameHandler.Instance.player.ammoEnabled && shootable.replenishAmmo) GameHandler.Instance.player.AddAmmo(refillOnShot);
 
 				ParticleSystem p = ParticleManager.CreateParticleSystem("Bullet", transform.position, transform.parent, true);

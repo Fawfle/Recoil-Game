@@ -13,9 +13,10 @@ public class SaveData
 
 	public int endlessRuns = 0;
 
+	// settings
 	public float volume = 1f;
-
 	public bool clickToShootEnabled = false;
+	public bool levelIntroPanEnabled = true;
 
 	public List<LevelCompleteData> completedLevels = new();
 

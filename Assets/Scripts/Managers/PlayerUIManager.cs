@@ -8,7 +8,7 @@ public class PlayerUIManager : MonoBehaviour
 {
 	public static PlayerUIManager Instance { get; private set; }
 
-	[SerializeField] private Transform powerupUIMainContainer, powerupUITimerContainer;
+	[SerializeField] private Transform powerupUIMainContainer;
 
 	[SerializeField] private PowerupUI powerupUIMainPrefab, powerupUITimerPrefab;
 
@@ -41,14 +41,16 @@ public class PlayerUIManager : MonoBehaviour
 			bulletImages[i].color = ((bulletImages.Count - 1 - i) < GameHandler.Instance.player.ammo) ? Color.yellow : new Color(0.1f, 0.1f, 0.1f);
 		}
 
+		/*
 		Vector3 followPosition = GameHandler.Instance.player.transform.position;
 		followPosition.z = powerupUITimerContainer.transform.position.z;
 		powerupUITimerContainer.transform.position = followPosition;
+		*/
 	}
 
 	private void DestroyPowerupTimerUI()
 	{
-		foreach (Transform child in powerupUITimerContainer.transform)
+		foreach (Transform child in GameHandler.Instance.player.powerupTimerContainer.transform)
 		{
 			Destroy(child.gameObject);
 		}
@@ -57,7 +59,7 @@ public class PlayerUIManager : MonoBehaviour
 	public void AddPowerupUI(Powerup p)
 	{
 		CreatePowerupUI(p, powerupUIMainPrefab, powerupUIMainContainer);
-		CreatePowerupUI(p, powerupUITimerPrefab, powerupUITimerContainer);
+		CreatePowerupUI(p, powerupUITimerPrefab, GameHandler.Instance.player.powerupTimerContainer);
 	}
 
 	private PowerupUI CreatePowerupUI(Powerup p, PowerupUI prefab, Transform parent)

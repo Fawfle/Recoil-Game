@@ -13,6 +13,13 @@ public class Explosive : MonoBehaviour, IShootable
 	// to stop getting shot multiple times in the same frame
 	bool shot = false;
 
+	private SpriteRenderer sr;
+
+	private void Awake()
+	{
+		sr = GetComponent<SpriteRenderer>();
+	}
+
 	public void OnShot()
 	{
 		if (GameHandler.Instance.player == null || shot) return;
@@ -26,7 +33,16 @@ public class Explosive : MonoBehaviour, IShootable
 			GameHandler.Instance.player.rb.velocity += (range - distance) * strength * direction;
 		}
 
-		ParticleManager.CreateParticleSystem("Explosion", transform.position, transform.parent, true);
+		var p = ParticleManager.CreateParticleSystem("Explosion", transform.position, transform.parent, true);
+
+		// for explosive walls
+		if (sr != null)
+		{
+			ParticleSystem.ShapeModule shape = p.shape;
+			shape.sprite = sr.sprite;
+			shape.texture = sr.sprite.texture; // will sample texture to decide what colors to set particles to (on top of startColor)
+			shape.scale *= sr.size; // account for scaling
+		}
 
 		AudioManager.PlaySoundGroup("Explosion");
 
