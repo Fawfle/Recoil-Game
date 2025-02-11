@@ -101,6 +101,51 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Level30.unity
     guid: 93ed142274a297b4e98bfea7694abb76
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level31.unity
+    guid: 73f2d72bc3030664a8febf5f3ec625ac
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level32.unity
+    guid: e55fca988bcf3ee47b1c77cfb3e3ad69
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level33.unity
+    guid: 24bf31a6db4bbce4dbdc0c9e41d394ee
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level34.unity
+    guid: a056e4a43343d4a47bfb7325b5d933b7
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level35.unity
+    guid: 4e1aea56341589e41aa55906ec1c6769
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level36a.unity
+    guid: 79830a889b924a546b8e6e0363d7794e
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level37.unity
+    guid: 09ba5d102d5f1d344a47f55d006be0f0
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level38.unity
+    guid: 63b594dea7ccb7947bf880adf5a0c5b2
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level39.unity
+    guid: 95672b39cb46e40438aa1c18116e7be6
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level40a.unity
+    guid: 67c3436da5ffc884384395a62e599c03
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level41.unity
+    guid: c89a797913c20e445a3eb2c03b5caa21
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level42.unity
+    guid: 3abafb77c323dba4d8b8ac1fed5f0f1c
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level43.unity
+    guid: e3a97951e7442d740af0e0c196e57376
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level44.unity
+    guid: ac578ab0eed71514bbb7bd9c9c79e641
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level45.unity
+    guid: cea9813921a0578449cad92da541d62f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7de75eff09ae9a840997d7b2945b97dc, type: 2}
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2d972ded4ad431f49ae1f0d38ec23661, type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: f8713be1852871c4a85a19af609bf0ff, type: 3}

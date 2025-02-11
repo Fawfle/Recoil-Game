@@ -4,8 +4,6 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 using Powerups;
-using Unity.VisualScripting;
-using System.Runtime.ConstrainedExecution;
 
 public class Player : MonoBehaviour
 {
@@ -33,7 +31,7 @@ public class Player : MonoBehaviour
 	private static readonly float LEVEL_WON_LERP_SPEED = 1f;
 
 	private bool invincible = false;
-	[SerializeField] private float hitInvincibleDuration = 0.5f;
+	private float hitInvincibleDuration = 0f;
 
 	[Header("Bullets")]
 	[SerializeField] public bool ammoEnabled = false;
@@ -147,6 +145,7 @@ public class Player : MonoBehaviour
 
 		if (ControlManager.Controls.game.restart.WasPressedThisFrame())
 		{
+			ControlManager.Controls.game.restart.Reset();
 			Die();
 		}
 	}
@@ -203,6 +202,17 @@ public class Player : MonoBehaviour
 
 		if (!LevelManager.Instance.IsInBounds(transform.position, LEVEL_KILL_DISTANCE_SIZE * Vector2.one))
 		{
+			// shield bounce
+			if (health > 1f)
+			{
+				TakeDamage();
+				if (transform.position.x + LEVEL_KILL_DISTANCE_SIZE / 2f < LevelManager.Instance.bounds.xMin) rb.velocity = new Vector2(SHIELD_SAVE_VELOCITY, rb.velocity.y);
+				if (transform.position.x - LEVEL_KILL_DISTANCE_SIZE / 2f > LevelManager.Instance.bounds.xMax) rb.velocity = new Vector2(-SHIELD_SAVE_VELOCITY, rb.velocity.y);
+				if (transform.position.y + LEVEL_KILL_DISTANCE_SIZE / 2f < LevelManager.Instance.bounds.yMin) rb.velocity = new Vector2(rb.velocity.x, SHIELD_SAVE_VELOCITY);
+				if (transform.position.y - LEVEL_KILL_DISTANCE_SIZE / 2f > LevelManager.Instance.bounds.yMax) rb.velocity = new Vector2(rb.velocity.x, -SHIELD_SAVE_VELOCITY);
+				return;
+			}
+
 			Die();
 			return;
 		}
@@ -273,6 +283,7 @@ public class Player : MonoBehaviour
 			shieldSprite.gameObject.SetActive(false);
 
 			AudioManager.PlaySoundGroup("ShieldHit");
+			ParticleManager.CreateParticleSystem("Shield", transform.position, transform.parent, true);
 		}
 
 		if (health <= 0)
@@ -281,7 +292,7 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		StartCoroutine(HitInvincibility());
+		if (hitInvincibleDuration > 0f) StartCoroutine(HitInvincibility());
 	}
 
 	public void Die()
@@ -314,7 +325,7 @@ public class Player : MonoBehaviour
 	{
 		foreach (SpriteRenderer sr in srs)
 		{
-			sr.color = Color.Lerp(sr.color, new Color(0, 0, 0), 0.3f);
+			sr.color = UnityEngine.Color.Lerp(sr.color, new UnityEngine.Color(0, 0, 0), 0.3f);
 		}
 	}
 

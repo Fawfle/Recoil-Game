@@ -26,7 +26,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: particleSystemList.Array.size
-    value: 8
+    value: 9
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: particleSystemList.Array.data[0].key
@@ -122,6 +122,18 @@ Preset:
     objectReference: {fileID: 3644610991377878384, guid: 48d38cf425d0c53479ebd19ae67ddcff, type: 3}
   - target: {fileID: 0}
     propertyPath: particleSystemList.Array.data[7].loop
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[8].key
+    value: Shield
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[8].particleSystem
+    value: 
+    objectReference: {fileID: 6799739654065495926, guid: 7ff01ab0fe1ca5442b3f3e526bc5ad7b, type: 3}
+  - target: {fileID: 0}
+    propertyPath: particleSystemList.Array.data[8].loop
     value: 0
     objectReference: {fileID: 0}
   m_ExcludedProperties: []

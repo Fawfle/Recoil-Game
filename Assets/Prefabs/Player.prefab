@@ -175,7 +175,7 @@ MonoBehaviour:
   recoilForce: 5
   velocityConservationCoefficient: 0.25
   hitInvincibleDuration: 0.5
-  ammoEnabled: 0
+  ammoEnabled: 1
   maxAmmo: 6
   ammo: 6
   bulletSpeed: 5

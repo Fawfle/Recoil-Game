@@ -133,6 +133,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a2bb25f5-8b0a-441b-be05-7f20b58913b3"",
+                    ""path"": ""<Touchscreen>/touch*/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""1d6aa5de-5c2f-4a9d-a017-27a645a6326f"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",

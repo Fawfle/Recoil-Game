@@ -67,19 +67,28 @@ public class CameraManager : MonoBehaviour
 
         float distanceTraveled = 0f;
 
-        while (panPath.path.length - distanceTraveled > 0.05f)
+        //print("panlength: " + panPath.path.length);
+
+        while (panPath.path.length >= distanceTraveled)
         {
-            distanceTraveled += introPanSpeed * Time.deltaTime;
-			Vector2 nextPosition = panPath.path.GetPointAtDistance(distanceTraveled);
+			distanceTraveled += introPanSpeed * Time.deltaTime;
+			Vector2 nextPosition = panPath.path.GetPointAtDistance(distanceTraveled, EndOfPathInstruction.Stop);
 
 			UpdateLookAheadOffset();
 			nextPosition += lookAheadOffset;
 
 			UpdateCameraPosition(ClampInLevelBounds(nextPosition));
-            yield return null;
+
+            /*
+            print("Distance Travelled: " + distanceTraveled);
+            print("Path: " + panPath.path.GetPointAtDistance(distanceTraveled));
+            print("Camera Position: " + transform.position);
+            */
+
+			yield return null;
         }
 
-		print(panPath.path.GetPointAtDistance(100f, EndOfPathInstruction.Stop));
+		//print(panPath.path.GetPointAtDistance(100f, EndOfPathInstruction.Stop));
 
 
 		//UpdateCameraPosition(ClampInLevelBounds(panPath.path.GetPointAtTime(1f, EndOfPathInstruction.Stop) + (Vector3)lookAheadOffset));

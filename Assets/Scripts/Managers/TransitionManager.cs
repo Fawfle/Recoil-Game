@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using TMPro;
+using DG.Tweening;
 
 [RequireComponent(typeof(Animator))]
 public class TransitionManager : MonoBehaviour
@@ -60,6 +61,7 @@ public class TransitionManager : MonoBehaviour
 
 		if (Time.timeScale == 0) anim.updateMode = AnimatorUpdateMode.Normal;
 
+		DOTween.Clear();
 		SceneManager.LoadScene(name);
 	}
 

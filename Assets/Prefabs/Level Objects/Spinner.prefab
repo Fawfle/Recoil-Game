@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spinning: 1
-  spinSpeed: 1
+  spinSpeed: 0.2
+  spinOffsetDegrees: 0

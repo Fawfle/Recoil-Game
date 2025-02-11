@@ -39,6 +39,12 @@ public class LevelMenuManager : MonoBehaviour
 		StartCoroutine(IntroRoutine());
 	}
 
+	private void Update()
+	{
+		// r to reset
+		if (GameHandler.Instance.IsState(GameState.Over) && ControlManager.Controls.game.restart.WasPressedThisFrame()) TransitionManager.Instance.ReloadScene();
+	}
+
 	// show some intro text and stuff
 	private IEnumerator IntroRoutine()
 	{

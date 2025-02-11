@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Powerups
 {
@@ -95,11 +92,23 @@ namespace Powerups
 		{
 			return activeUI;
 		}
+
+		public Powerup Copy()
+		{
+			return (Powerup)MemberwiseClone();
+		}
+
+		public Powerup DeepCopy()
+		{
+			var p = (Powerup)MemberwiseClone();
+			p.activeUI = new();
+			return p;
+		}
 	}
 
 	public class RecoilPowerup : Powerup
 	{
-		private float previousRecoil;
+		//private float previousRecoil;
 
 		public static readonly float RECOIL_MULTIPLIER = 1.5f;
 
@@ -110,13 +119,13 @@ namespace Powerups
 
 		public override void OnStart()
 		{
-			previousRecoil = GameHandler.Instance.player.recoilForce;
-			GameHandler.Instance.player.recoilForce = previousRecoil * RECOIL_MULTIPLIER;
+			//previousRecoil = GameHandler.Instance.player.recoilForce;
+			GameHandler.Instance.player.recoilForce *= RECOIL_MULTIPLIER;
 		}
 
 		public override void OnEnd()
 		{
-			GameHandler.Instance.player.recoilForce = previousRecoil;
+			GameHandler.Instance.player.recoilForce /= RECOIL_MULTIPLIER;
 		}
 	}
 
@@ -162,7 +171,7 @@ namespace Powerups
 
 	public class ShotgunPowerup : Powerup
 	{
-		private float previousRecoil;
+		//private float previousRecoil;
 
 		private int maxShots = 3;
 		private int shotsLeft = 3;
@@ -176,15 +185,14 @@ namespace Powerups
 
 		public override void OnStart()
 		{
-			previousRecoil = GameHandler.Instance.player.recoilForce;
-			GameHandler.Instance.player.recoilForce = previousRecoil * RECOIL_MULTIPLIER;
+			GameHandler.Instance.player.recoilForce *= RECOIL_MULTIPLIER;
 
 			GameHandler.Instance.player.OnShoot += OnPlayerShoot;
 		}
 
 		public override void OnEnd()
 		{
-			GameHandler.Instance.player.recoilForce = previousRecoil;
+			GameHandler.Instance.player.recoilForce /= RECOIL_MULTIPLIER;
 
 			GameHandler.Instance.player.OnShoot -= OnPlayerShoot;
 
