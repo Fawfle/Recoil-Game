@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Animator))]
 public class TransitionManager : MonoBehaviour
@@ -72,6 +73,7 @@ public class TransitionManager : MonoBehaviour
 
 		if (!transitioning) return;
 		Time.timeScale = 1.0f;
+
 		StartCoroutine(SceneLoadedRoutine(scene));
 	}
 
