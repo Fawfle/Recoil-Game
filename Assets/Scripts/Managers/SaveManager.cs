@@ -131,12 +131,28 @@ public static class SaveManager
 		if (write) WriteSaveToSave();
 	}
 
+	public static void SetLeaderboardCrownEnabled(bool isOn, bool write = true)
+	{
+		save.leaderboardCrownEnabled = isOn;
+
+		if (write) WriteSaveToSave();
+	}
+
+	public static void UpdateLeaderboardRank(int rank, bool write = true)
+	{
+		save.currentLeaderboardRank = rank;
+
+		save.highestLeaderboardRank = save.highestLeaderboardRank == -1 ? rank : Mathf.Min(save.highestLeaderboardRank, rank);
+
+		if (write) WriteSaveToSave();
+	}
+
 	public static bool WriteSaveToSave()
 	{
 		return WriteToSave(save);
 	}
 
-	public static bool WriteToSave(SaveData data)
+	private static bool WriteToSave(SaveData data)
 	{
 		var fullPath = Path.Combine(Application.persistentDataPath, SAVE_FILE);
 

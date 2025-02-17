@@ -43,7 +43,11 @@ public class LeaderboardManager : MonoBehaviour
 
 	private Menu menu = Menu.Top;
 
-    private async void Awake()
+	public static readonly Color FIRST_COLOR = new(1f, 0.7529413f, 0.2352941f); // gold
+	public static readonly Color SECOND_COLOR = new(0.7f, 0.7f, 0.7f); // silver
+	public static readonly Color THIRD_COLOR = new(1f, 0.7222361f, 0.333f); // bronze
+
+	private async void Awake()
 	{
 		if (Instance != null && Instance != this) { Destroy(gameObject); return; }
 		Instance = this;
@@ -118,7 +122,7 @@ public class LeaderboardManager : MonoBehaviour
 
 		var playerEntry = await GetPlayerScore();
 
-			bool isInTop = playerEntry?.Rank < PAGE_SIZE;
+		bool isInTop = playerEntry?.Rank < PAGE_SIZE;
 
 		if (type == Menu.Top)
 		{
@@ -166,6 +170,10 @@ public class LeaderboardManager : MonoBehaviour
 			var entryUI = Instantiate(leaderboardEntryUI, leaderboardEntryParent);
 
 			entryUI.LoadFromLeaderboardEntry(entries[i]);
+
+			if (entries[i].Rank == 0) entryUI.SetTextColor(FIRST_COLOR);
+			if (entries[i].Rank == 1) entryUI.SetTextColor(SECOND_COLOR);
+			if (entries[i].Rank == 2) entryUI.SetTextColor(THIRD_COLOR);
 
 			if (entries[i].PlayerId == AuthenticationService.Instance.PlayerId) entryUI.SetAsPlayerEntry();
 		}
@@ -275,6 +283,8 @@ public class LeaderboardManager : MonoBehaviour
 		}
 
 		Debug.Log(JsonConvert.SerializeObject(scoresResponse));
+
+		SaveManager.UpdateLeaderboardRank(scoresResponse.Rank);
 
 		return scoresResponse;
 	}

@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 using Powerups;
-using UnityEngine.Assertions.Must;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private SpriteRenderer bodySr;
 	[SerializeField] private SpriteRenderer outlineSr;
 	[SerializeField] private SpriteRenderer gunSr;
+	[SerializeField] private Image crownImage;
 
 	[Header("Paramaters")]
 	[SerializeField] public int health = 1;
@@ -73,6 +74,12 @@ public class Player : MonoBehaviour
 	{
 		LoadSkin(skinManager.GetSkin(SaveManager.save.playerSkin));
 		LoadPlayerColor();
+		if (SaveManager.save.leaderboardCrownEnabled && SaveManager.save.currentLeaderboardRank < 3)
+		{
+			crownImage.gameObject.SetActive(true);
+			crownImage.color = SaveManager.save.currentLeaderboardRank == 0 ? LeaderboardManager.FIRST_COLOR : SaveManager.save.currentLeaderboardRank == 1 ? LeaderboardManager.SECOND_COLOR : LeaderboardManager.THIRD_COLOR;
+			crownImage.CrossFadeAlpha(0.7f, 0f, true);
+		}
 	}
 
 	// called on init
@@ -336,6 +343,34 @@ public class Player : MonoBehaviour
 		gunSr.sprite = skin.gunSprite;
 		gunSr.transform.localScale = skin.gunScale * Vector3.one;
 		gunSr.size = skin.gunSize;
+
+		foreach (Transform child in outlineSr.transform)
+		{
+			Destroy(child.gameObject);
+		}
+
+		// create new sprites under outline with offsets
+		if (skin.outlineOffset != 0f)
+		{
+			Vector2[] offsets = { new(skin.outlineOffset, 0), new(0, skin.outlineOffset), new(skin.outlineOffset, skin.outlineOffset), new(-skin.outlineOffset, skin.outlineOffset) };
+
+			for (int i = 0; i < offsets.Length; i++)
+			{
+				for (int j = 0; j < 2; j++)
+				{
+					GameObject g = new GameObject("Outline " + (i * 2 + j));
+					var sr = g.AddComponent<SpriteRenderer>();
+
+					g.transform.SetParent(outlineSr.transform);
+					g.transform.localScale = Vector3.one;
+
+					g.transform.localPosition = offsets[i] * (j == 0 ? 1 : -1);
+
+					sr.color = outlineSr.color;
+					sr.sprite = outlineSr.sprite;
+				}
+			}
+		}
 	}
 
 	private void LoadPlayerColor()
@@ -413,7 +448,11 @@ public class Player : MonoBehaviour
 		// kill tag for instakills like in levels
 		if (collision.CompareTag("Kill")) Die();
 
-		else if (collision.CompareTag("Goal")) GameHandler.Instance.SetState(GameState.LevelComplete);
+		else if (collision.CompareTag("Goal"))
+		{
+			GameHandler.Instance.SetState(GameState.LevelComplete);
+			rb.angularDrag = 1f;
+		}
 	}
 
 	/*

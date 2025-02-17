@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class LeaderboardEntryUI : MonoBehaviour
 {
-    [SerializeField] private Color playerEntryColor = new Color(255f, 255f, 0f);
+    //[SerializeField] private Color playerEntryColor = new Color(255f, 255f, 0f);
 
     [SerializeField] private TextMeshProUGUI rank, username, score;
 
@@ -24,7 +24,7 @@ public class LeaderboardEntryUI : MonoBehaviour
 
     public void SetAsPlayerEntry()
     {
-        SetTextColor(playerEntryColor);
+        SetTextColor(SaveManager.save.playerColor);
     }
 
     public void SetTextColor(Color c)

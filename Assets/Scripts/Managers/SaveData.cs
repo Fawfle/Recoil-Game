@@ -24,6 +24,8 @@ public class SaveData
 	public Color playerColor = new Color(0.3254902f, 0.6156863f, 1f); // initial player color
 	public SkinKey playerSkin = SkinKey.Default;
 
+	public bool leaderboardCrownEnabled = true;
+
 	public List<LevelCompleteData> completedLevels = new();
 
 	//currently preemptive, can be used if I want to add time and stuff

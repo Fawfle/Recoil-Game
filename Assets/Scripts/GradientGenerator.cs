@@ -48,9 +48,9 @@ public class GradientGenerator : MonoBehaviour
 
 		//texture = (Texture2D)image.mainTexture;
 
-		print(texture);
+		//print(texture);
 
-		print(texture.width);
+		//print(texture.width);
 
 		for (int x = 0; x < texture.width; x++)
 		{

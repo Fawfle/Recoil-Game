@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.ConstrainedExecution;
 using TMPro;
 using UnityEngine;
@@ -38,9 +39,10 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Slider playerColorSlider;
     [SerializeField] private Button equipSkinButton, skinForwardButton, skinBackwardButton;
     [SerializeField] private TextMeshProUGUI skinDescriptionText, equipButtonText;
+    [SerializeField] private Toggle leaderboardCrownToggle;
 
-    [SerializeField] private SpriteRenderer playerBody, playerOutline, playerGun;
-    private Color playerBodyColor, playerOutlineColor;
+	[SerializeField] private SpriteRenderer playerBody, playerOutline, playerGun, playerCrown;
+    private Color playerBodyColor, playerOutlineColor, skinDescriptionColor, equipButtonColor;
 
     private int currentSkinIndex = 0; // current skin page, corresponds to skinmanger indexes
     private PlayerSkin currentSkin;
@@ -76,6 +78,7 @@ public class MainMenuManager : MonoBehaviour
         volumeSlider.onValueChanged.AddListener(OnVolumeSliderUpdate);
         clickToShootToggle.onValueChanged.AddListener(OnClickToShootToggleUpdate);
         levelIntroPanToggle.onValueChanged.AddListener(OnLevelIntroPanToggleUpdate);
+        leaderboardCrownToggle.onValueChanged.AddListener(OnLeaderboardCrownToggleUpdate);
 
         // customization
         playerColorSlider.onValueChanged.AddListener(OnPlayerColorSliderUpdate);
@@ -108,8 +111,11 @@ public class MainMenuManager : MonoBehaviour
 
 		playerColorSlider.SetValueWithoutNotify(playerHue);
 
+        // save colors so I can grey them out later
 		playerBodyColor = playerBody.color;
 		playerOutlineColor = playerOutline.color;
+        skinDescriptionColor = skinDescriptionText.color;
+        equipButtonColor = equipButtonText.color;
 
 		LoadSkinPage(skinManager.GetSkinIndex(SaveManager.save.playerSkin));
 
@@ -160,13 +166,50 @@ public class MainMenuManager : MonoBehaviour
         UpdatePlayerColor();
 	}
 
-    private void UpdatePlayerColor()
+	private void OnLeaderboardCrownToggleUpdate(bool isOn)
+	{
+		SaveManager.SetLeaderboardCrownEnabled(isOn);
+
+        UpdatePlayerCrown();
+	}
+
+
+	// configure customization menu by disabling podium crown toggle if the player isn't in the top 3
+	private void OnCustomizationLoad()
+	{
+		Graphic[] graphics = leaderboardCrownToggle.transform.parent.GetComponentsInChildren<Graphic>();
+
+		bool isTop3 = SaveManager.save.currentLeaderboardRank < 3;
+
+		foreach (Graphic g in graphics)
+		{
+			g.CrossFadeAlpha(isTop3 ? 1f : 0.3f, 0f, true);
+			leaderboardCrownToggle.interactable = isTop3;
+		}
+
+        UpdatePlayerCrown();
+	}
+
+    private void UpdatePlayerCrown()
+    {
+		if (SaveManager.save.currentLeaderboardRank < 3 && SaveManager.save.leaderboardCrownEnabled)
+		{
+			playerCrown.gameObject.SetActive(true);
+			playerCrown.color = SaveManager.save.currentLeaderboardRank == 0 ? LeaderboardManager.FIRST_COLOR : SaveManager.save.currentLeaderboardRank == 1 ? LeaderboardManager.SECOND_COLOR : LeaderboardManager.THIRD_COLOR;
+		}
+		else
+		{
+			playerCrown.gameObject.SetActive(false);
+		}
+	}
+
+	private void UpdatePlayerColor()
     {
         playerColorSlider.targetGraphic.color = SaveManager.save.playerColor;
 
         customizationButton.targetGraphic.color = SaveManager.save.playerColor;
 
-        UpdatePlayerSkinColor();
+        UpdatePlayerPreviewColor();
 	}
 
     public void LoadSkinPage(int index)
@@ -177,8 +220,9 @@ public class MainMenuManager : MonoBehaviour
 		isSkinUnlocked = SkinManager.HasSkinUnlocked(currentSkin.skinKey);
 
         skinDescriptionText.text = currentSkin.description;
+		skinDescriptionText.color = DimIfLocked(skinDescriptionColor);
 
-        UpdatePlayerSkin();
+		UpdatePlayerSkin();
 
         UpdateSkinPage();
     }
@@ -187,7 +231,9 @@ public class MainMenuManager : MonoBehaviour
     {
         bool isEquipped = currentSkin.skinKey == SaveManager.save.playerSkin;
         equipSkinButton.interactable = !(isEquipped || !isSkinUnlocked);
-        equipButtonText.text = isEquipped ? "Equipped" : "Equip";
+        equipButtonText.text = isEquipped ? "Equipped" : isSkinUnlocked ? "Equip" : "Locked";
+
+        equipButtonText.color = DimIfLocked(equipButtonColor, 1f);
     }
 
     private void EquipCurrentSkin()
@@ -212,16 +258,53 @@ public class MainMenuManager : MonoBehaviour
         playerGun.size = currentSkin.gunSize;
 
         // dim locked skins
-        playerBody.color = Color.Lerp(playerBodyColor, isSkinUnlocked ? playerBodyColor : Color.black, 0.3f);
-        playerOutline.color = Color.Lerp(playerOutlineColor, isSkinUnlocked ? playerOutlineColor : Color.black, 0.3f);
+        playerBody.color = DimIfLocked(playerBodyColor);
+        playerOutline.color = DimIfLocked(playerOutlineColor);
 
-        UpdatePlayerSkinColor();
+		// more complex drawing for offseted outlines
+		foreach (Transform child in playerOutline.transform)
+		{
+			Destroy(child.gameObject);
+		}
+
+        // create new sprites under outline with offsets
+		if (currentSkin.outlineOffset != 0f)
+		{
+			Vector2[] offsets = { new(currentSkin.outlineOffset, 0), new(0, currentSkin.outlineOffset), new(currentSkin.outlineOffset, currentSkin.outlineOffset), new(-currentSkin.outlineOffset, currentSkin.outlineOffset) };
+
+			for (int i = 0; i < offsets.Length; i++)
+			{
+                for (int j = 0; j < 2; j++)
+                {
+                    GameObject g = new GameObject("Outline " + i);
+                    var sr = g.AddComponent<SpriteRenderer>();
+
+                    g.transform.SetParent(playerOutline.transform);
+                    g.transform.localScale = Vector3.one;
+
+                    g.transform.localPosition = offsets[i] * (j == 0 ? 1 : -1);
+
+                    sr.color = playerOutline.color;
+                    sr.sprite = playerOutline.sprite;
+                }
+			}
+		}
+
+		UpdatePlayerPreviewColor();
 	}
 
-    public void UpdatePlayerSkinColor()
+    public void UpdatePlayerPreviewColor()
     {
-		playerGun.color = Color.Lerp(SaveManager.save.playerColor, isSkinUnlocked ? SaveManager.save.playerColor : Color.black, 0.3f);
+        playerGun.color = DimIfLocked(SaveManager.save.playerColor);
 	}
+
+    // returns dimmed color if skin isn't unlocked
+    private Color DimIfLocked(Color c, float t = 0.3f)
+    {
+        if (isSkinUnlocked) return c;
+
+        return Color.Lerp(c, Color.black, t);
+    }
 
 	#endregion
 
@@ -255,7 +338,17 @@ public class MainMenuManager : MonoBehaviour
         statsText.text = statsText.text.Replace("-playtime-", Mathf.Round((float)SaveManager.save.playTimeSeconds / 60f).ToString());
         statsText.text = statsText.text.Replace("-shots-", SaveManager.save.shotsFired.ToString());
         statsText.text = statsText.text.Replace("-runs-", SaveManager.save.endlessRuns.ToString());
-    }
+
+        int collectedSkins = 0;
+
+        foreach (SkinKey key in Enum.GetValues(typeof(SkinKey)))
+        {
+            if (SkinManager.HasSkinUnlocked(key)) collectedSkins++;
+        }
+
+		statsText.text = statsText.text.Replace("-skins-", collectedSkins.ToString());
+		statsText.text = statsText.text.Replace("-maxskins-", skinManager.skins.Count.ToString());
+	}
 
 	#endregion
 
@@ -281,6 +374,7 @@ public class MainMenuManager : MonoBehaviour
         {
             LeaderboardManager.Instance.SetLeaderboardMenu(LeaderboardManager.Menu.Top);
         }
+        else if (menu == MenuType.Customization) OnCustomizationLoad();
     }
 
     enum MenuType
