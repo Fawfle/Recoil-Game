@@ -9,14 +9,20 @@ public class SaveData
 	public int deaths = 0;
 	public int shotsFired = 0;
 
-	public double playTime = 0f;
+	public double playTimeSeconds = 0f;
 
 	public int endlessRuns = 0;
+
+	public int highestLeaderboardRank = -1;
+	public int currentLeaderboardRank = -1;
 
 	// settings
 	public float volume = 1f;
 	public bool clickToShootEnabled = false;
 	public bool levelIntroPanEnabled = true;
+
+	public Color playerColor = new Color(0.3254902f, 0.6156863f, 1f); // initial player color
+	public SkinKey playerSkin = SkinKey.Default;
 
 	public List<LevelCompleteData> completedLevels = new();
 

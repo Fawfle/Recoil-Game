@@ -1912,7 +1912,7 @@ MonoBehaviour:
     spawnHeight: 0
     maxCount: 3
     minimumSpawnDistance: 1
-    frequencyScalingCoefficient: 0
+    frequencyScalingCoefficient: -0.3
     modifiable: 1
   - name: Spike
     obj: {fileID: 8885633384082610991, guid: d9b592b3330a19047b5af6aebaaf8285, type: 3}
@@ -1922,7 +1922,7 @@ MonoBehaviour:
     spawnHeight: 0
     maxCount: 10
     minimumSpawnDistance: 1
-    frequencyScalingCoefficient: 0.2
+    frequencyScalingCoefficient: 0.3
     modifiable: 1
   - name: ForceEmitter
     obj: {fileID: 6940290550406978535, guid: 3da85e3943adcd8478d3b490bbe725b8, type: 3}
@@ -1932,7 +1932,7 @@ MonoBehaviour:
     spawnHeight: 250
     maxCount: 4
     minimumSpawnDistance: 1
-    frequencyScalingCoefficient: 0.2
+    frequencyScalingCoefficient: 0.4
     modifiable: 1
   - name: Ammo
     obj: {fileID: 1017160374143912859, guid: 9639a072d9f02364b99bf38e7fdb161e, type: 3}
@@ -1940,7 +1940,7 @@ MonoBehaviour:
     spawnDistanceMin: 15
     spawnDistanceMax: 20
     spawnHeight: 0
-    maxCount: 100
+    maxCount: 10
     minimumSpawnDistance: 1
     frequencyScalingCoefficient: 0
     modifiable: 0
@@ -1953,6 +1953,16 @@ MonoBehaviour:
     maxCount: 1
     minimumSpawnDistance: 1
     frequencyScalingCoefficient: 0
+    modifiable: 0
+  - name: Wall
+    obj: {fileID: 2788812668621316601, guid: ca23a89465e9ebb41952a63d2295c618, type: 3}
+    container: {fileID: 0}
+    spawnDistanceMin: 15
+    spawnDistanceMax: 20
+    spawnHeight: 500
+    maxCount: 5
+    minimumSpawnDistance: 2
+    frequencyScalingCoefficient: 0.3
     modifiable: 0
   levelObjectModifiers:
   - name: Spinner
@@ -1971,6 +1981,7 @@ MonoBehaviour:
     appliedCountToIncrease: 50
   explosiveStrength: 1
   forceEmitterStrength: 3
+  wallSize: 2
   spinnerSpeed: 0.5
   waypointSpeed: 0.5
 --- !u!114 &831333570
@@ -3003,6 +3014,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1722695478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6769187844088946312, guid: d2161dc0eaff97f44851473c453c5ce0, type: 3}
+  m_PrefabInstance: {fileID: 2539860685137711577}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1722695483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722695478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaeaa6e1a22c2f34bb4d0fe864767eb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1818974377 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2970183690230950259, guid: d2161dc0eaff97f44851473c453c5ce0, type: 3}
@@ -3678,7 +3706,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6769187844088946312, guid: d2161dc0eaff97f44851473c453c5ce0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1722695483}
   m_SourcePrefab: {fileID: 100100000, guid: d2161dc0eaff97f44851473c453c5ce0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

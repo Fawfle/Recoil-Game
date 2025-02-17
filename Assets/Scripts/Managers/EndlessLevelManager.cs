@@ -30,6 +30,8 @@ public class EndlessLevelManager : MonoBehaviour
     [SerializeField] private float explosiveStrength = 1f;
 	[SerializeField] private float forceEmitterStrength = 3f;
 
+	[SerializeField] private float wallSize = 2f;
+
 	[Header("Modifiers")]
 	[SerializeField] private float spinnerSpeed = 0.5f;
 	[SerializeField] private float waypointSpeed = 0.5f;
@@ -107,6 +109,14 @@ public class EndlessLevelManager : MonoBehaviour
         {
             f.force = -forceEmitterStrength;
         }
+		g.TryGetComponent(out Wall w);
+		if (w != null)
+		{
+			w.sr.size = new Vector2(wallSize, 1);
+			w.UpdateCollider();
+
+			w.transform.Rotate(0, 0, Random.Range(0, 360));
+		}
     }
 
 	public void ConfigureLevelItemModifier(GameObject g)
@@ -139,14 +149,15 @@ public class EndlessLevelManager : MonoBehaviour
 
 		[Tooltip("Height to begin spawning")]
 		public float spawnHeight = 0;
+		private float startSpawnHeight;
 
 		public float maxCount = 8f;
 
 		[Tooltip("Distance from other objects required to spawn")]
 		public float minimumSpawnDistance = 0f;
 
-		[Tooltip("Coefficient of height for decreasing spawn distance")]
-		[Range(0f, 1f)]
+		[Tooltip("Coefficient of height for decreasing spawn distance (negative values decrease frequency, positive values increase it)")]
+		[Range(-1f, 1f)]
 		public float frequencyScalingCoefficient = 0;
 		private static readonly float SCALING_COEFFICIENT = 0.0005f; // scaling for height
 
@@ -160,6 +171,7 @@ public class EndlessLevelManager : MonoBehaviour
 			container = new GameObject(name + " Container").transform;
 			container.SetParent(Instance.itemContainer);
 
+			startSpawnHeight = spawnHeight;
 			//while (count < maxCount) AddNew();
 		}
 
@@ -167,8 +179,9 @@ public class EndlessLevelManager : MonoBehaviour
 		{
 			if (container == null) { Init(); return null; }
 
-			// coefficient is a logistic function from 1 to 1-frefrequencyScalingCoefficient
-			spawnHeight += Random.Range(spawnDistanceMin, spawnDistanceMax) * ((1 - frequencyScalingCoefficient) + frequencyScalingCoefficient * (1 / (1 + spawnHeight * SCALING_COEFFICIENT)));
+			spawnHeight += Random.Range(spawnDistanceMin, spawnDistanceMax) * GetScalingFactor();
+
+			//print(obj.name + ": " + GetScalingFactor());
 
 			GameObject g = GameObject.Instantiate(obj);
 
@@ -201,6 +214,13 @@ public class EndlessLevelManager : MonoBehaviour
 
 			return g;
 		}
+
+		// coefficient is a logistic function from 1 to 1-frefrequencyScalingCoefficient, spawnheight goes from initial height
+		private float GetScalingFactor()
+		{
+			if (frequencyScalingCoefficient == 0) return 1;
+			return (1 - frequencyScalingCoefficient) + frequencyScalingCoefficient * (1 / (1 + (Mathf.Max(0, spawnHeight - startSpawnHeight)) * SCALING_COEFFICIENT));
+		}
 	}
 
 	[System.Serializable]
@@ -222,7 +242,7 @@ public class EndlessLevelManager : MonoBehaviour
 		[Tooltip("Applied count to increase apply period. Scaled by (1+times_increased/10)")]
 		public int appliedCountToIncrease = 50;
 		private int timesIncreased = 0;
-		private int maxIncrease = 5;
+		private int maxIncrease = 7;
 
 		public void Update()
 		{

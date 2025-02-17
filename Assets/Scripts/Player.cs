@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 using Powerups;
+using UnityEngine.Assertions.Must;
 
 public class Player : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class Player : MonoBehaviour
 
 	[SerializeField] private SpriteRenderer shieldSprite;
 	[SerializeField] public Transform powerupTimerContainer;
+
+	[SerializeField] private SkinManager skinManager;
+	[SerializeField] private SpriteRenderer bodySr;
+	[SerializeField] private SpriteRenderer outlineSr;
+	[SerializeField] private SpriteRenderer gunSr;
 
 	[Header("Paramaters")]
 	[SerializeField] public int health = 1;
@@ -61,24 +67,12 @@ public class Player : MonoBehaviour
 		rb = GetComponent<Rigidbody2D>();
 
 		ammo = maxAmmo;
-		/*
-        if (ammoEnabled)
-        {
-            for (int i = 0; i < maxAmmo; i++)
-            {
-                float angle = ((float)i / maxAmmo) * 2 * Mathf.PI;
-                SpriteRenderer bullet = Instantiate(bulletUIPrefab);
+	}
 
-                bullet.transform.localPosition = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * 0.7f;
-                print(angle);
-                print(new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)));
-
-				bullet.transform.SetParent(bulletUIContainer);
-
-                bulletUIList.Add(bullet);
-            }
-        }
-        */
+	private void Start()
+	{
+		LoadSkin(skinManager.GetSkin(SaveManager.save.playerSkin));
+		LoadPlayerColor();
 	}
 
 	// called on init
@@ -119,7 +113,7 @@ public class Player : MonoBehaviour
 		Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		Vector2 relative = target - transform.position;
 		float angle = Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg;
-		gunAnchor.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+		gunAnchor.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
 		if (GameHandler.Instance.IsGameMode(GameMode.Endless))
 		{
@@ -251,13 +245,15 @@ public class Player : MonoBehaviour
 
 		SaveManager.IncrementShotsFired();
 
-		CreateBullet(gunAnchor.localRotation);
+		CreateBullet(gunAnchor.rotation);
 
 		if (HasPowerup(typeof(ShotgunPowerup)))
 		{
-			CreateBullet(gunAnchor.localRotation * Quaternion.Euler(0, 0, SHOTGUN_BULLET_ANGLE_OFFSET));
-			CreateBullet(gunAnchor.localRotation * Quaternion.Euler(0, 0, -SHOTGUN_BULLET_ANGLE_OFFSET));
+			CreateBullet(gunAnchor.rotation * Quaternion.Euler(0, 0, SHOTGUN_BULLET_ANGLE_OFFSET));
+			CreateBullet(gunAnchor.rotation * Quaternion.Euler(0, 0, -SHOTGUN_BULLET_ANGLE_OFFSET));
 		}
+
+		rb.angularVelocity = rb.angularVelocity * 0.25f + -Mathf.Sign(direction.x) * recoilForce * 25f;
 
 		OnShoot?.Invoke();
 	}
@@ -306,7 +302,7 @@ public class Player : MonoBehaviour
 		if (!DOTween.IsTweening(Camera.main)) DOTween.Complete(Camera.main);
 		Camera.main.DOShakePosition(1f, 1f, 20, fadeOut: true);
 
-		DimSprites(GetComponents<SpriteRenderer>());
+		//DimSprites(GetComponents<SpriteRenderer>());
 		DimSprites(GetComponentsInChildren<SpriteRenderer>());
 
 		rb.AddTorque(25f * -Mathf.Sign(rb.velocity.x) * rb.velocity.magnitude);
@@ -327,6 +323,24 @@ public class Player : MonoBehaviour
 		{
 			sr.color = UnityEngine.Color.Lerp(sr.color, new UnityEngine.Color(0, 0, 0), 0.3f);
 		}
+	}
+
+	private void LoadSkin(PlayerSkin skin)
+	{
+		bodySr.sprite = skin.bodySprite;
+		bodySr.transform.localScale = skin.bodyScale * Vector3.one;
+
+		outlineSr.sprite = skin.bodySprite;
+		outlineSr.transform.localScale = skin.outlineScale * Vector3.one;
+
+		gunSr.sprite = skin.gunSprite;
+		gunSr.transform.localScale = skin.gunScale * Vector3.one;
+		gunSr.size = skin.gunSize;
+	}
+
+	private void LoadPlayerColor()
+	{
+		gunSr.color = SaveManager.save.playerColor;
 	}
 
 	public void AddPowerup(Powerup powerup)

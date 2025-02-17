@@ -33,6 +33,16 @@ public static class SaveManager
 		return false;
 	}
 
+	public static bool HasCompletedLevels(int start, int end)
+	{
+		for (int i = start; i < end; i++)
+		{
+			if (!HasCompletedLevel(LevelsManager.Levels[i])) return false;
+		}
+
+		return true;
+	}
+
 	public static void UpdateLevelCompleted(SaveData.LevelCompleteData data)
 	{
 		if (!HasCompletedLevel(data.levelKey))
@@ -57,7 +67,7 @@ public static class SaveManager
 
 	public static void AddDeltaTime()
 	{
-		save.playTime += Time.deltaTime;
+		save.playTimeSeconds += Time.deltaTime;
 	}
 
 	public static void IncrementShotsFired()
@@ -103,6 +113,20 @@ public static class SaveManager
 	public static void SetSaveLevelIntroPan(bool isOn, bool write = true)
 	{
 		save.levelIntroPanEnabled = isOn;
+
+		if (write) WriteSaveToSave();
+	}
+
+	public static void SetPlayerColor(Color c, bool write = true)
+	{
+		save.playerColor = c;
+
+		if (write) WriteSaveToSave();
+	}
+
+	public static void SetPlayerSkin(SkinKey skin, bool write = true)
+	{
+		save.playerSkin = skin;
 
 		if (write) WriteSaveToSave();
 	}

@@ -35,6 +35,9 @@ public class EndlessLevelMenuManager : MonoBehaviour
 
 	private void Update()
 	{
+		// r to reset
+		if (GameHandler.Instance.IsState(GameState.Over) && ControlManager.Controls.game.restart.WasPressedThisFrame()) TransitionManager.Instance.ReloadScene();
+
 		if (GameHandler.Instance.IsEndState()) return;
 
 		scoreHeightText.text = Mathf.Floor(GameHandler.Instance.maxPlayerHeight * 10f).ToString();

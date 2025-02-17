@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d771beeb3a899241b14f46c3171eb3a, type: 3}
+  m_Name: Player Skins
+  m_EditorClassIdentifier: 
+  skins:
+  - name: Default
+    description: 
+    skinKey: 0
+    bodySprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+    bodyScale: 0.7
+    outlineScale: 1
+    gunSprite: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+    gunScale: 0.5
+    gunSize: {x: 1.18125, y: 0.39375}
+  - name: High Score 1
+    description: Get a score over 1000 in endless
+    skinKey: 1
+    bodySprite: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+    bodyScale: 0.7
+    outlineScale: 1
+    gunSprite: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+    gunScale: 0.5
+    gunSize: {x: 1.18125, y: 0.39375}
+  - name: High Score 2
+    description: Get a score over 10000 in endless
+    skinKey: 2
+    bodySprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+    bodyScale: 0.7
+    outlineScale: 1
+    gunSprite: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+    gunScale: 0.5
+    gunSize: {x: 1.18125, y: 0.39375}
+  - name: Leaderboard
+    description: Get top 3 on the leaderboard
+    skinKey: 3
+    bodySprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+    bodyScale: 0.7
+    outlineScale: 1
+    gunSprite: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+    gunScale: 0.5
+    gunSize: {x: 1.18125, y: 0.39375}
+  - name: Levels 1
+    description: Complete levels 1-24
+    skinKey: 4
+    bodySprite: {fileID: 2747690628134850419, guid: 16037dbd798344f57a526d53d48f5ead, type: 3}
+    bodyScale: 0.8
+    outlineScale: 1.1
+    gunSprite: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+    gunScale: 0.5
+    gunSize: {x: 1.18125, y: 0.39375}
+  - name: Levels 2
+    description: Complete levels 25-48
+    skinKey: 5
+    bodySprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+    bodyScale: 0.7
+    outlineScale: 1
+    gunSprite: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+    gunScale: 0.5
+    gunSize: {x: 1.18125, y: 0.39375}

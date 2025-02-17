@@ -442,10 +442,10 @@ MonoBehaviour:
   editorData:
     _bezierPath:
       points:
-      - {x: 4, y: 0, z: 0}
-      - {x: 3, y: 0, z: 0}
-      - {x: 1, y: 0, z: 0}
-      - {x: 0, y: 0, z: 0}
+      - {x: 53.25, y: 0, z: 0}
+      - {x: 39.25, y: 0, z: 0}
+      - {x: 11.25, y: 0, z: 0}
+      - {x: -2.75, y: 0, z: 0}
       isClosed: 0
       space: 1
       controlMode: 3
@@ -1413,6 +1413,10 @@ PrefabInstance:
       propertyPath: panPath
       value: 
       objectReference: {fileID: 710800205}
+    - target: {fileID: 1855645915143331588, guid: 1e5eb6a1e7d38194ebf77ca297b4cfe4, type: 3}
+      propertyPath: introPanEnabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1855645915143331588, guid: 1e5eb6a1e7d38194ebf77ca297b4cfe4, type: 3}
       propertyPath: panPositionTransform
       value: 
