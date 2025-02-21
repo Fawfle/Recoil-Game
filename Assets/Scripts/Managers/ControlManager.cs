@@ -26,6 +26,10 @@ public class ControlManager : MonoBehaviour
 		Controls.Enable();
 
 		InputSystem.Update(); // clear inputs
+
+		// remove touch to shoot if not on mobile
+		if (!Application.isMobilePlatform) Controls.game.shoot.ChangeBinding(1).Erase();
+		//print(Controls.game.shoot.bindings);
 	}
 
 	// cursed (fixed update doesn't run when timescale is 0, so I need to manually do it.

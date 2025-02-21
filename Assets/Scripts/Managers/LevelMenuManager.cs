@@ -95,7 +95,7 @@ public class LevelMenuManager : MonoBehaviour
 		//GameHandler.Instance.OnGameInit += OnGameInit;
 		//GameHandler.Instance.OnGamePlay += OnGamePlay;
 		GameHandler.Instance.OnGameOver += OnGameOver;
-		GameHandler.Instance.onLevelComplete += OnLevelComplete;
+		GameHandler.Instance.OnLevelComplete += OnLevelComplete;
 	}
 
 	private void OnDisable()
@@ -103,6 +103,6 @@ public class LevelMenuManager : MonoBehaviour
 		//GameHandler.Instance.OnGameInit -= OnGameInit;
 		//GameHandler.Instance.OnGamePlay -= OnGamePlay;
 		GameHandler.Instance.OnGameEnd -= OnGameOver;
-		GameHandler.Instance.onLevelComplete -= OnLevelComplete;
+		GameHandler.Instance.OnLevelComplete -= OnLevelComplete;
 	}
 }

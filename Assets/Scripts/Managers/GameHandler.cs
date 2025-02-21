@@ -14,7 +14,7 @@ public class GameHandler : MonoBehaviour
 
     [SerializeField] private GameState state;
 
-    public event Action OnGameInit, OnGamePlay, OnGameEnd, OnGameOver, onLevelComplete;
+    public event Action OnGameInit, OnGamePlay, OnGameEnd, OnGameOver, OnLevelComplete;
 
 	[SerializeField] private GameMode mode;
 
@@ -54,7 +54,12 @@ public class GameHandler : MonoBehaviour
 	{
         state = s;
 
-		if (s == GameState.Init) OnGameInit?.Invoke();
+		if (s == GameState.Init)
+		{
+			OnGameInit?.Invoke();
+			if (mode == GameMode.Level && LevelManager.isPracticeMode) player.transform.position = LevelManager.practiceSpawnPosition;
+		}
+
 		else if (s == GameState.Play) OnGamePlay?.Invoke();
 		else if (s == GameState.Over)
 		{
@@ -78,10 +83,14 @@ public class GameHandler : MonoBehaviour
 		else if (s == GameState.LevelComplete)
 		{
 			OnGameEnd?.Invoke();
-			onLevelComplete?.Invoke();
+			OnLevelComplete?.Invoke();
 
-			SaveData.LevelCompleteData completeData = new(LevelsManager.GetCurrentLevelKey(), LevelsManager.GetCurrentLevelIndex());
-			SaveManager.UpdateLevelCompleted(completeData);
+			// if level is in practice mode, don't save
+			if (!LevelManager.isPracticeMode)
+			{
+				SaveData.LevelCompleteData completeData = new(LevelsManager.GetCurrentLevelKey(), LevelsManager.GetCurrentLevelIndex());
+				SaveManager.UpdateLevelCompleted(completeData);
+			}
 		}
 	}
 

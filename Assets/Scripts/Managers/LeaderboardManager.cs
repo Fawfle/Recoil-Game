@@ -43,9 +43,9 @@ public class LeaderboardManager : MonoBehaviour
 
 	private Menu menu = Menu.Top;
 
-	public static readonly Color FIRST_COLOR = new(1f, 0.7529413f, 0.2352941f); // gold
-	public static readonly Color SECOND_COLOR = new(0.7f, 0.7f, 0.7f); // silver
-	public static readonly Color THIRD_COLOR = new(1f, 0.7222361f, 0.333f); // bronze
+	public static readonly Color FIRST_COLOR = new(1f, 0.6769231f, 0f); // gold
+	public static readonly Color SECOND_COLOR = new(0.5943396f, 0.5943396f, 0.5943396f); // silver
+	public static readonly Color THIRD_COLOR = new(0.9622642f, 0.6573539f, 0.4039694f); // bronze
 
 	private async void Awake()
 	{

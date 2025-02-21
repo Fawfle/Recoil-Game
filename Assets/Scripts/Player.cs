@@ -74,11 +74,11 @@ public class Player : MonoBehaviour
 	{
 		LoadSkin(skinManager.GetSkin(SaveManager.save.playerSkin));
 		LoadPlayerColor();
-		if (SaveManager.save.leaderboardCrownEnabled && SaveManager.save.currentLeaderboardRank < 3)
+		if (SaveManager.save.leaderboardCrownEnabled && SaveManager.IsOnLeaderboardPodium())
 		{
 			crownImage.gameObject.SetActive(true);
 			crownImage.color = SaveManager.save.currentLeaderboardRank == 0 ? LeaderboardManager.FIRST_COLOR : SaveManager.save.currentLeaderboardRank == 1 ? LeaderboardManager.SECOND_COLOR : LeaderboardManager.THIRD_COLOR;
-			crownImage.CrossFadeAlpha(0.7f, 0f, true);
+			crownImage.CrossFadeAlpha(0.8f, 0f, true);
 		}
 	}
 
@@ -117,7 +117,7 @@ public class Player : MonoBehaviour
 		}
 
 
-		Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		Vector3 target = Camera.main.ScreenToWorldPoint(ControlManager.Controls.game.mouse.ReadValue<Vector2>());
 		Vector2 relative = target - transform.position;
 		float angle = Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg;
 		gunAnchor.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
@@ -236,7 +236,10 @@ public class Player : MonoBehaviour
 
 	void ShootBullet()
 	{
-		Vector2 direction = (((Vector2)transform.position) - (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)).normalized;
+		//print(ControlManager.Controls.game.mouse.ReadValue<Vector2>());
+		//print(Input.mousePosition);
+
+		Vector2 direction = (((Vector2)transform.position) - (Vector2)Camera.main.ScreenToWorldPoint(ControlManager.Controls.game.mouse.ReadValue<Vector2>())).normalized;
 		rb.velocity = direction * recoilForce + rb.velocity * velocityConservationCoefficient;
 
 		// first shot is "super"

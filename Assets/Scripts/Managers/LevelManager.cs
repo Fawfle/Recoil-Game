@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 // manager for individual levels
@@ -11,10 +13,61 @@ public class LevelManager : MonoBehaviour
 
 	public LevelGoal goal;
 
+	public TextMeshProUGUI practiceUIText;
+
+	[HideInInspector] public static bool isPracticeMode = false;
+	[HideInInspector] public static Vector2 practiceSpawnPosition;
+	public Transform practiceSpawnMarker;
+
 	private void Awake()
 	{
 		if (Instance != null && Instance != this) { Destroy(gameObject); return; }
 		Instance = this;
+	}
+
+	private void OnEnable()
+	{
+		if (!TransitionManager.sceneReloaded)
+		{
+			DisablePracticeMode();
+		}
+
+		if (isPracticeMode) UpdatePracticeUI();
+	}
+
+	private void Update()
+	{
+		if (TransitionManager.transitioning) return;
+
+		if (!GameHandler.Instance.IsEndState() && ControlManager.Controls.game.start_practice.WasPressedThisFrame())
+		{
+			practiceSpawnPosition = GameHandler.Instance.player.transform.position;
+
+			if (!isPracticeMode) EnablePracticeMode();
+			UpdatePracticeUI();
+		}
+		else if (isPracticeMode && ControlManager.Controls.game.end_practice.WasPressedThisFrame())
+		{
+			DisablePracticeMode();
+			TransitionManager.Instance.ReloadScene();
+		}
+	}
+
+	public void EnablePracticeMode()
+	{
+		isPracticeMode = true;
+	}
+
+	public void UpdatePracticeUI()
+	{
+		practiceUIText.gameObject.SetActive(true);
+		practiceSpawnMarker.transform.position = practiceSpawnPosition;
+		practiceSpawnMarker.gameObject.SetActive(true);
+	}
+
+	public void DisablePracticeMode()
+	{
+		isPracticeMode = false;
 	}
 
 	public bool IsInBounds(Vector3 vec, Vector2 size = default(Vector2))

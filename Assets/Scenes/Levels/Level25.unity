@@ -214,7 +214,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 'black holes pull you in
 
-        If you get stuck, press ''R'''
+        If you get stuck, press ''R''
+
+        pressing
+        ''R'' in the game over menu will also reset'
       objectReference: {fileID: 0}
     - target: {fileID: 8564886733929100570, guid: 262d82e4a33d7864482ec60f6c29d95d, type: 3}
       propertyPath: m_Name

@@ -40,6 +40,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button equipSkinButton, skinForwardButton, skinBackwardButton;
     [SerializeField] private TextMeshProUGUI skinDescriptionText, equipButtonText;
     [SerializeField] private Toggle leaderboardCrownToggle;
+	[SerializeField] private Graphic[] leaderboardCrownToggleGraphics;
+	[SerializeField] private Graphic[] leaderboardCrownToggleCheckbox;
 
 	[SerializeField] private SpriteRenderer playerBody, playerOutline, playerGun, playerCrown;
     private Color playerBodyColor, playerOutlineColor, skinDescriptionColor, equipButtonColor;
@@ -105,6 +107,7 @@ public class MainMenuManager : MonoBehaviour
         volumeSlider.SetValueWithoutNotify(SaveManager.save.volume);
 		clickToShootToggle.SetIsOnWithoutNotify(SaveManager.save.clickToShootEnabled);
         levelIntroPanToggle.SetIsOnWithoutNotify(SaveManager.save.levelIntroPanEnabled);
+        leaderboardCrownToggle.SetIsOnWithoutNotify(SaveManager.save.leaderboardCrownEnabled);
 
         // set slider to hue value of player
         Color.RGBToHSV(SaveManager.save.playerColor, out var playerHue, out var _, out var _);
@@ -177,14 +180,23 @@ public class MainMenuManager : MonoBehaviour
 	// configure customization menu by disabling podium crown toggle if the player isn't in the top 3
 	private void OnCustomizationLoad()
 	{
-		Graphic[] graphics = leaderboardCrownToggle.transform.parent.GetComponentsInChildren<Graphic>();
+        //Graphic[] graphics = leaderboardCrownToggle.transform.parent.GetComponentsInChildren<Graphic>();
+        //print(graphics.Length);
 
-		bool isTop3 = SaveManager.save.currentLeaderboardRank < 3;
+        bool isTop3 = SaveManager.IsOnLeaderboardPodium();
+		leaderboardCrownToggle.enabled = isTop3;
 
-		foreach (Graphic g in graphics)
+		foreach (Graphic g in leaderboardCrownToggleGraphics)
 		{
 			g.CrossFadeAlpha(isTop3 ? 1f : 0.3f, 0f, true);
-			leaderboardCrownToggle.interactable = isTop3;
+		}
+
+        if (leaderboardCrownToggle.isOn)
+        {
+			foreach (Graphic g in leaderboardCrownToggleCheckbox)
+			{
+				g.CrossFadeAlpha(isTop3 ? 1f : 0.3f, 0f, true);
+			}
 		}
 
         UpdatePlayerCrown();
@@ -192,10 +204,12 @@ public class MainMenuManager : MonoBehaviour
 
     private void UpdatePlayerCrown()
     {
-		if (SaveManager.save.currentLeaderboardRank < 3 && SaveManager.save.leaderboardCrownEnabled)
+		if (SaveManager.IsOnLeaderboardPodium() && SaveManager.save.leaderboardCrownEnabled)
 		{
 			playerCrown.gameObject.SetActive(true);
-			playerCrown.color = SaveManager.save.currentLeaderboardRank == 0 ? LeaderboardManager.FIRST_COLOR : SaveManager.save.currentLeaderboardRank == 1 ? LeaderboardManager.SECOND_COLOR : LeaderboardManager.THIRD_COLOR;
+			Color crownColor = SaveManager.save.currentLeaderboardRank == 0 ? LeaderboardManager.FIRST_COLOR : SaveManager.save.currentLeaderboardRank == 1 ? LeaderboardManager.SECOND_COLOR : LeaderboardManager.THIRD_COLOR;
+            crownColor.a = 0.8f;
+            playerCrown.color = crownColor;
 		}
 		else
 		{
@@ -334,7 +348,9 @@ public class MainMenuManager : MonoBehaviour
     private void PopulateStats()
     {
         statsText.text = statsText.text.Replace("-score-", Mathf.Round((float)SaveManager.save.highScore).ToString());
-        statsText.text = statsText.text.Replace("-deaths-", SaveManager.save.deaths.ToString());
+		statsText.text = statsText.text.Replace("-rank-", SaveManager.save.currentLeaderboardRank != -1 ? (SaveManager.save.currentLeaderboardRank + 1).ToString() : "none");
+		statsText.text = statsText.text.Replace("-highrank-", SaveManager.save.highestLeaderboardRank != -1 ? (SaveManager.save.highestLeaderboardRank + 1).ToString() : "none");
+		statsText.text = statsText.text.Replace("-deaths-", SaveManager.save.deaths.ToString());
         statsText.text = statsText.text.Replace("-playtime-", Mathf.Round((float)SaveManager.save.playTimeSeconds / 60f).ToString());
         statsText.text = statsText.text.Replace("-shots-", SaveManager.save.shotsFired.ToString());
         statsText.text = statsText.text.Replace("-runs-", SaveManager.save.endlessRuns.ToString());

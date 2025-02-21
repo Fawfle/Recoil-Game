@@ -62,6 +62,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""start_practice"",
+                    ""type"": ""Button"",
+                    ""id"": ""4ee227a3-4a5c-4b00-a8c2-6eba9b4a5258"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""end_practice"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b150fcb-2a6e-4ed1-ae85-6cd7df01775b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""mouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""54fcea8e-1176-42ff-b8e4-2cbe901e2f21"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -163,6 +190,61 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""restart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9013f07b-1cae-42ec-8ef2-b2022b2bff07"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""981ff6ff-9a4a-40b7-9700-2a89d5444395"",
+                    ""path"": ""<Pointer>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e215989e-7702-4f47-9d94-06be6977a86d"",
+                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d907378f-eb78-4c2e-a6a8-dbe95bc828b8"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""start_practice"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ddd090f-2bd0-4559-9e98-0fb8a0d9f244"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""end_practice"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -175,6 +257,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_game_shoot = m_game.FindAction("shoot", throwIfNotFound: true);
         m_game_shootAlt = m_game.FindAction("shootAlt", throwIfNotFound: true);
         m_game_restart = m_game.FindAction("restart", throwIfNotFound: true);
+        m_game_start_practice = m_game.FindAction("start_practice", throwIfNotFound: true);
+        m_game_end_practice = m_game.FindAction("end_practice", throwIfNotFound: true);
+        m_game_mouse = m_game.FindAction("mouse", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -245,6 +330,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_game_shoot;
     private readonly InputAction m_game_shootAlt;
     private readonly InputAction m_game_restart;
+    private readonly InputAction m_game_start_practice;
+    private readonly InputAction m_game_end_practice;
+    private readonly InputAction m_game_mouse;
     public struct GameActions
     {
         private @PlayerControls m_Wrapper;
@@ -253,6 +341,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @shoot => m_Wrapper.m_game_shoot;
         public InputAction @shootAlt => m_Wrapper.m_game_shootAlt;
         public InputAction @restart => m_Wrapper.m_game_restart;
+        public InputAction @start_practice => m_Wrapper.m_game_start_practice;
+        public InputAction @end_practice => m_Wrapper.m_game_end_practice;
+        public InputAction @mouse => m_Wrapper.m_game_mouse;
         public InputActionMap Get() { return m_Wrapper.m_game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -274,6 +365,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @restart.started += instance.OnRestart;
             @restart.performed += instance.OnRestart;
             @restart.canceled += instance.OnRestart;
+            @start_practice.started += instance.OnStart_practice;
+            @start_practice.performed += instance.OnStart_practice;
+            @start_practice.canceled += instance.OnStart_practice;
+            @end_practice.started += instance.OnEnd_practice;
+            @end_practice.performed += instance.OnEnd_practice;
+            @end_practice.canceled += instance.OnEnd_practice;
+            @mouse.started += instance.OnMouse;
+            @mouse.performed += instance.OnMouse;
+            @mouse.canceled += instance.OnMouse;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -290,6 +390,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @restart.started -= instance.OnRestart;
             @restart.performed -= instance.OnRestart;
             @restart.canceled -= instance.OnRestart;
+            @start_practice.started -= instance.OnStart_practice;
+            @start_practice.performed -= instance.OnStart_practice;
+            @start_practice.canceled -= instance.OnStart_practice;
+            @end_practice.started -= instance.OnEnd_practice;
+            @end_practice.performed -= instance.OnEnd_practice;
+            @end_practice.canceled -= instance.OnEnd_practice;
+            @mouse.started -= instance.OnMouse;
+            @mouse.performed -= instance.OnMouse;
+            @mouse.canceled -= instance.OnMouse;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -313,5 +422,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnShootAlt(InputAction.CallbackContext context);
         void OnRestart(InputAction.CallbackContext context);
+        void OnStart_practice(InputAction.CallbackContext context);
+        void OnEnd_practice(InputAction.CallbackContext context);
+        void OnMouse(InputAction.CallbackContext context);
     }
 }

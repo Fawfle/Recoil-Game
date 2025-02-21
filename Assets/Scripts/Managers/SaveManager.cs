@@ -43,6 +43,14 @@ public static class SaveManager
 		return true;
 	}
 
+	/// <summary>
+	/// returns whether the player is currently in the top 3 of the leaderboard
+	/// </summary>
+	public static bool IsOnLeaderboardPodium()
+	{
+		return save.currentLeaderboardRank != -1 && save.currentLeaderboardRank < 3;
+	}
+
 	public static void UpdateLevelCompleted(SaveData.LevelCompleteData data)
 	{
 		if (!HasCompletedLevel(data.levelKey))

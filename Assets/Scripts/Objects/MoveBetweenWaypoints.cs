@@ -11,7 +11,7 @@ public class MoveBetweenWaypoints : MonoBehaviour
 	private int currentWaypointIndex = 0;
 	private int nextWaypointIndex = 1;
 
-	[HideInInspector] public float t = 0;
+	public float t = 0;
 	//[HideInInspector] public Vector2 startPosition;
 
 	private void Update()
